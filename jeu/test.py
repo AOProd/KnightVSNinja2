@@ -26,40 +26,24 @@ class Player(pygame.sprite.Sprite):
         
     
 
-class Sol1(pygame.sprite.Sprite):
+class Sol(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self,x):
 
 
         self.image = pygame.image.load('sol.png')
         self.rect = self.image.get_rect()
-        self.rect.x = 0
+        self.rect.x = x
         self.rect.y = 590
         
     def update(self):
 
         self.rect.x =  self.rect.x - 20
         print(self.rect.x)
-        if self.rect.x <= -796:
+        if self.rect.x <= -400:
             self.rect.x = 796
 
-class Sol2(pygame.sprite.Sprite):
 
-    def __init__(self,):
-
-
-        self.image = pygame.image.load('sol.png')
-        self.rect = self.image.get_rect()
-        self.rect.x = 796
-        self.rect.y = 590
-        
-    def update(self):
-
-        self.rect.x =  self.rect.x - 20
-        print(self.rect.x)
-        
-        if self.rect.x <= -796:
-            self.rect.x = 796
         
         
         
@@ -67,8 +51,9 @@ class Sol2(pygame.sprite.Sprite):
 
 background = pygame.image.load('background.png')
 
-sol1 = Sol1()
-sol2 = Sol2()
+sol1 = Sol(0)
+sol2 = Sol(796)
+
 
 player = Player()
 
