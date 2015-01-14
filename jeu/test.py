@@ -14,20 +14,25 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         
         self.i = self.i + 1
+        
         if self.i == 1:    
-            self.image = pygame.image.load('0.png')
-        elif self.i == 2:
             self.image = pygame.image.load('1.png')
-        elif self.i == 3:
+        elif self.i == 2:
             self.image = pygame.image.load('2.png')
-        elif self.i == 4:
+        elif self.i == 3:
             self.image = pygame.image.load('3.png')
-        elif self.i == 5:
+        elif self.i == 4:
             self.image = pygame.image.load('4.png')
-        elif self.i == 6:
+        elif self.i == 5:
             self.image = pygame.image.load('5.png')
+        elif self.i == 6:
+            self.image = pygame.image.load('6.png')
+        elif self.i == 7:
+            self.image = pygame.image.load('7.png')
+        elif self.i == 8:
+            self.image = pygame.image.load('0.png')
             self.i = 0
-        clock.tick(20)
+        clock.tick(10)
 
         
     
@@ -45,7 +50,6 @@ class Sol(pygame.sprite.Sprite):
     def update(self):
 
         self.rect.x =  self.rect.x - 20
-        print(self.rect.x)
         if self.rect.x <= -400:
             self.rect.x = 796
 
