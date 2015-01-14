@@ -1,4 +1,8 @@
 import pygame
+from pygame.locals import *
+import sys
+import time
+import pyganim
 
 # définit les couleurs
 BLACK    = (   0,   0,   0)
@@ -11,30 +15,50 @@ GREEN    = (   0, 255,   0)
 ECRAN_LARGEUR  = 800
 ECRAN_HAUTEUR = 600
 
+size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
+screen = pygame.display.set_mode(size)
+
+    
 class Joueur(pygame.sprite.Sprite):
     #classe du joueur
 
     # vitesse de départ
+
     change_x = 3
     change_y = 0
 
     # sprites ou on peut rentrer dedans
     niveau = None
+    
+    def __init__(self, filename):
 
-    def __init__(self):
-        super().__init__()
+        super().__init__() 
 
-        # sprite ou forme de joueur
-        LARGEUR = 40
-        HAUTEUR = 60
-        self.image = pygame.Surface([LARGEUR, HAUTEUR])
-        self.image.fill(RED)
+    # sprite
+        self.image = pygame.image.load(filename).convert()
+        self.image.set_colorkey(BLACK)
 
         # la hitbox
         self.rect = self.image.get_rect()
 
+        #la variable pour l'animation après
+        spriteCount = 0
+        global spriteCount
+
+        
     def update(self):
-        """ Move the joueur. """
+        """ bouger joueur. """
+
+        #ANIMATION
+        global spriteCount        
+        if (pygame.time.get_ticks())%8 == 0:
+            spriteN = "jeu/knight_base.00%s.png"%(int(spriteCount))
+            self.image = pygame.image.load(spriteN)
+            spriteCount += 1
+            if spriteCount == 7:
+                spriteCount =0
+                
+        
         # gravité
         self.calc_grav()
 
@@ -61,6 +85,7 @@ class Joueur(pygame.sprite.Sprite):
 
             # arrête le mouvement
             self.change_y = 0
+            
 
 
     def calc_grav(self):
@@ -120,7 +145,6 @@ class Niveau(object):
 
     # actualisation
     def update(self):
-        """ Update everything in this niveau."""
         self.platform_list.update()
         self.enemy_list.update()
 
@@ -174,9 +198,9 @@ def main():
     size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Platformer with moving platforms")
+    pygame.display.set_caption("Knight VS Ninja 2")
 
-    joueur = Joueur()
+    joueur = Joueur("jeu/knight.png")
 
     niveau_list = []
     niveau_list.append(Niveau_01(joueur))
@@ -229,9 +253,10 @@ def main():
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau
+
         # les dessins en dessous :
        
-  	    current_niveau.draw(screen)
+        current_niveau.draw(screen)
         active_sprite_list.draw(screen)
 
         # et au dessus 
