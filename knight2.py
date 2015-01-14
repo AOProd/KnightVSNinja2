@@ -1,297 +1,247 @@
 import pygame
 
-# Global constants
-
-# Colors
+# définit les couleurs
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 BLUE     = (   0,   0, 255)
 RED      = ( 255,   0,   0)
 GREEN    = (   0, 255,   0)
 
-# Screen dimensions
-SCREEN_WIDTH  = 800
-SCREEN_HEIGHT = 600
+# taille de l'écran
+ECRAN_LARGEUR  = 800
+ECRAN_HAUTEUR = 600
 
-class Player(pygame.sprite.Sprite):
-    """
-    This class represents the bar at the bottom that the player controls.
-    """
+class Joueur(pygame.sprite.Sprite):
+    #classe du joueur
 
-    # -- Attributes
-    # Set speed vector of player
+    # vitesse de départ
     change_x = 3
     change_y = 0
 
-    # List of sprites we can bump against
-    level = None
+    # sprites ou on peut rentrer dedans
+    niveau = None
 
-    # -- Methods
     def __init__(self):
-        """ Constructor function """
-
-        # Call the parent's constructor
         super().__init__()
 
-        # Create an image of the block, and fill it with a color.
-        # This could also be an image loaded from the disk.
-        width = 40
-        height = 60
-        self.image = pygame.Surface([width, height])
+        # sprite ou forme de joueur
+        LARGEUR = 40
+        HAUTEUR = 60
+        self.image = pygame.Surface([LARGEUR, HAUTEUR])
         self.image.fill(RED)
 
-        # Set a referance to the image rect.
+        # la hitbox
         self.rect = self.image.get_rect()
 
     def update(self):
-        """ Move the player. """
-        # Gravity
+        """ Move the joueur. """
+        # gravité
         self.calc_grav()
 
-        # Move left/right
+        # mouvement horizontal
         self.rect.x += self.change_x
 
-        # See if we hit anything
-        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        # test de collision
+        block_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
         for block in block_hit_list:
-            # If we are moving right,
-            # set our right side to the left side of the item we hit
-            if self.change_x > 0:
-                self.rect.right = block.rect.left
-            elif self.change_x < 0:
-                # Otherwise if we are moving left, do the opposite.
-                self.rect.left = block.rect.right
+            self.rect.right = block.rect.left
 
-        # Move up/down
+        # mouvement vertical
         self.rect.y += self.change_y
 
-        # Check and see if we hit anything
-        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        # test de collision
+        block_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
         for block in block_hit_list:
 
-            # Reset our position based on the top/bottom of the object.
+            # change la position si c'est en bas ou en haut qu'on touche
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
             elif self.change_y < 0:
                 self.rect.top = block.rect.bottom
 
-            # Stop our vertical movement
+            # arrête le mouvement
             self.change_y = 0
 
 
     def calc_grav(self):
-        """ Calculate effect of gravity. """
         if self.change_y == 0:
             self.change_y = 1
         else:
             self.change_y += .35
 
-        # See if we are on the ground.
-        if self.rect.y >= SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
+        # test si on est par terre
+        if self.rect.y >= ECRAN_HAUTEUR - self.rect.height and self.change_y >= 0:
             self.change_y = 0
-            self.rect.y = SCREEN_HEIGHT - self.rect.height
+            self.rect.y = ECRAN_HAUTEUR - self.rect.height
 
-    def jump(self):
-        """ Called when user hits 'jump' button. """
+    def saut(self):
 
-        # move down a bit and see if there is a platform below us.
-        # Move down 2 pixels because it doesn't work well if we only move down 1
-        # when working with a platform moving down.
+        # test de plateforme si on peut sauter
         self.rect.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        platform_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
         self.rect.y -= 2
 
-        # If it is ok to jump, set our speed upwards
-        if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
+        # saut si on peut
+        if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR:
             self.change_y = -10
 
     def stop(self):
-        """ Called when the user lets off the keyboard. """
+		#quand rien se passe
         self.change_x = 3
 
 class Platform(pygame.sprite.Sprite):
-    """ Platform the user can jump on """
 
-    def __init__(self, width, height):
-        """ Platform constructor. Assumes constructed with user passing in
-            an array of 5 numbers like what's defined at the top of this code.
-            """
+    def __init__(self, LARGEUR, HAUTEUR):
+        #constructeur des platform
         super().__init__()
 
-        self.image = pygame.Surface([width, height])
+        self.image = pygame.Surface([LARGEUR, HAUTEUR])
         self.image.fill(GREEN)
 
         self.rect = self.image.get_rect()
 
-class Level(object):
-    """ This is a generic super-class used to define a level.
-        Create a child class for each level with level-specific
-        info. """
+class Niveau(object):
+    #classe des niveaux
 
-    # Lists of sprites used in all levels. Add or remove
-    # lists as needed for your game.
+    #images et tout
     platform_list = None
     enemy_list = None
 
-    # Background image
-    background = None
+    fond = None
 
-    # How far this world has been scrolled left/right
-    world_shift = 0
-    level_limit = -1000
+    # taille du niveau
+    monde_shift = 0
+    niveau_limit = -1000
 
-    def __init__(self, player):
-        """ Constructor. Pass in a handle to player. Needed for when moving
-            platforms collide with the player. """
+    def __init__(self, joueur):
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
-        self.player = player
+        self.joueur = joueur
 
-    # Update everythign on this level
+    # actualisation
     def update(self):
-        """ Update everything in this level."""
+        """ Update everything in this niveau."""
         self.platform_list.update()
         self.enemy_list.update()
 
     def draw(self, screen):
-        """ Draw everything on this level. """
+        #afficher les sprites et graphiques
 
-        # Draw the background
         screen.fill(BLUE)
-
-        # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
 
-    def shift_world(self, shift_x):
-        """ When the user moves left/right and we need to scroll everything:
-        """
+    def shift_monde(self, shift_x):
+        #scrolling
+        self.monde_shift += shift_x
 
-        # Keep track of the shift amount
-        self.world_shift += shift_x
-
-        # Go through all the sprite lists and shift
         for platform in self.platform_list:
             platform.rect.x += shift_x
 
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
 
-# Create platforms for the level
-class Level_01(Level):
-    """ Definition for level 1. """
+# créer le premier niveau
+class Niveau_01(Niveau):
 
-    def __init__(self, player):
-        """ Create level 1. """
+    def __init__(self, joueur):
 
-        # Call the parent constructor
-        Level.__init__(self, player)
+        Niveau.__init__(self, joueur)
 
-        self.level_limit = -1300
+        self.niveau_limit = -1300
 
-        # Array with width, height, x, and y of platform
-        level = [[210, 70, 500, 500],
+        # mesures des platformes
+        niveau = [[210, 70, 500, 500],
                  [210, 70, 800, 400],
                  [210, 70, 1000, 500],
                  [210, 70, 1120, 280],
                  ]
 
 
-        # Go through the array above and add platforms
-        for platform in level:
+        # création des plateformes
+        for platform in niveau:
             block = Platform(platform[0], platform[1])
             block.rect.x = platform[2]
             block.rect.y = platform[3]
-            block.player = self.player
+            block.joueur = self.joueur
             self.platform_list.add(block)
 
 
 def main():
-    """ Main Program """
     pygame.init()
 
-    # Set the height and width of the screen
-    size = [SCREEN_WIDTH, SCREEN_HEIGHT]
+    #l'écran s'affiche
+    size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption("Platformer with moving platforms")
 
-    # Create the player
-    player = Player()
+    joueur = Joueur()
 
-    # Create all the levels
-    level_list = []
-    level_list.append(Level_01(player))
+    niveau_list = []
+    niveau_list.append(Niveau_01(joueur))
 
-    # Set the current level
-    current_level_no = 0
-    current_level = level_list[current_level_no]
+    current_niveau_no = 0
+    current_niveau = niveau_list[current_niveau_no]
 
     active_sprite_list = pygame.sprite.Group()
-    player.level = current_level
+    joueur.niveau = current_niveau
 
-    player.rect.x = 0
-    player.rect.y = SCREEN_HEIGHT - player.rect.height
-    active_sprite_list.add(player)
+    joueur.rect.x = 0
+    joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
+    active_sprite_list.add(joueur)
 
-    #Loop until the user clicks the close button.
+    #boucle jusqu'a ce que done = true
     done = False
 
-    # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
 
-    # -------- Main Program Loop -----------
+#la grande boucle
     while not done:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
-                done = True # Flag that we are done so we exit this loop
+		#si cliquer sur fermer
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT: 
+                done = True
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    player.jump()
+                    joueur.saut()
 
-        # Update the player.
+        # actualiser
         active_sprite_list.update()
+        current_niveau.update()
 
-
-        # Update items in the level
-        current_level.update()
-
-        # If the player gets near the right side, shift the world left (-x)
-        if player.rect.right >= 100:
-            diff = player.rect.right - 100
-            player.rect.right = 100
-            current_level.shift_world(-diff)
+        # scrolling
+        if joueur.rect.right >= 100:
+            diff = joueur.rect.right - 100
+            joueur.rect.right = 100
+            current_niveau.shift_monde(-diff)
             
-        # If the player gets to the end of the level, go to the next level
-        current_position = player.rect.x + current_level.world_shift
-        if current_position < current_level.level_limit:
-            if current_level_no < len(level_list)-1:
-                player.rect.x = 120
-                current_level_no += 1
-                current_level = level_list[current_level_no]
-                player.level = current_level
+        # changement de niveau et tout
+        current_position = joueur.rect.x + current_niveau.monde_shift
+        if current_position < current_niveau.niveau_limit:
+            if current_niveau_no < len(niveau_list)-1:
+                joueur.rect.x = 120
+                current_niveau_no += 1
+                current_niveau = niveau_list[current_niveau_no]
+                joueur.niveau = current_niveau
             else:
-                # Out of levels. This just exits the program.
-                # You'll want to do something better.
-                # ses sa ki fo fer mais debug mode : done = True
-                player.rect.x = 100
-                current_level = Level_01(player)
-                player.level = current_level
-        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-        current_level.draw(screen)
+                joueur.rect.x = 100
+                current_niveau = Niveau_01(joueur)
+                joueur.niveau = current_niveau
+        # les dessins en dessous :
+       
+  	    current_niveau.draw(screen)
         active_sprite_list.draw(screen)
 
-        # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+        # et au dessus 
 
-        # Limit to 60 frames per second
+
         clock.tick(60)
 
-        # Go ahead and update the screen with what we've drawn.
+        # update de l'écran
         pygame.display.flip()
 
-    # Be IDLE friendly. If you forget this line, the program will 'hang'
-    # on exit.
     pygame.quit()
 
 if __name__ == "__main__":
