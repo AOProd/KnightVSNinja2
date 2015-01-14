@@ -15,11 +15,17 @@ class Player(pygame.sprite.Sprite):
         
         self.i = self.i + 1
         if self.i == 1:    
-            self.image = pygame.image.load('1.png')
+            self.image = pygame.image.load('0.png')
         elif self.i == 2:
-            self.image = pygame.image.load('2.png')
+            self.image = pygame.image.load('1.png')
         elif self.i == 3:
+            self.image = pygame.image.load('2.png')
+        elif self.i == 4:
             self.image = pygame.image.load('3.png')
+        elif self.i == 5:
+            self.image = pygame.image.load('4.png')
+        elif self.i == 6:
+            self.image = pygame.image.load('5.png')
             self.i = 0
         clock.tick(20)
 
