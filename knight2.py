@@ -1,8 +1,5 @@
 import pygame
-from pygame.locals import *
-import sys
-import time
-import pyganim
+
 
 # définit les couleurs
 BLACK    = (   0,   0,   0)
