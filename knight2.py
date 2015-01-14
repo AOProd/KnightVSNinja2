@@ -187,7 +187,7 @@ class Level_01(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.level_limit = -1500
+        self.level_limit = -1300
 
         # Array with width, height, x, and y of platform
         level = [[210, 70, 500, 500],
@@ -275,8 +275,8 @@ def main():
                 # Out of levels. This just exits the program.
                 # You'll want to do something better.
                 # ses sa ki fo fer mais debug mode : done = True
-                player.rect.x = 200
-                current_level = 0
+                player.rect.x = 100
+                current_level = Level_01(player)
                 player.level = current_level
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         current_level.draw(screen)
