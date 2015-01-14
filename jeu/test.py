@@ -38,11 +38,14 @@ class Sol1(pygame.sprite.Sprite):
         
     def update(self):
 
-        self.rect.x =  self.rect.x - 2
+        self.rect.x =  self.rect.x - 20
+        print(self.rect.x)
+        if self.rect.x <= -796:
+            self.rect.x = 796
 
 class Sol2(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self,):
 
 
         self.image = pygame.image.load('sol.png')
@@ -52,7 +55,12 @@ class Sol2(pygame.sprite.Sprite):
         
     def update(self):
 
-        self.rect.x =  self.rect.x - 2
+        self.rect.x =  self.rect.x - 20
+        print(self.rect.x)
+        
+        if self.rect.x <= -796:
+            self.rect.x = 796
+        
         
         
 
@@ -70,9 +78,8 @@ screen_rect = screen.get_rect()
 
 clock = pygame.time.Clock()
 
-while 1 :
+while 1==1 :
 
-    
     screen.blit(background,screen_rect)
     screen.blit(sol1.image,(sol1.rect.x,sol1.rect.y))
     screen.blit(sol2.image,(sol2.rect.x,sol2.rect.y))
