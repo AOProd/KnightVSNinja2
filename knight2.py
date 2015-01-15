@@ -31,7 +31,7 @@ class Joueur(pygame.sprite.Sprite):
 
         super().__init__() 
 
-    # sprite
+        # sprite
         self.image = pygame.image.load(filename).convert()
         self.image.set_colorkey(BLACK)
 
@@ -39,21 +39,19 @@ class Joueur(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         #la variable pour l'animation après
-        spriteCount = 0
-        global spriteCount
-
+        self.spriteCount = 0
         
     def update(self):
         """ bouger joueur. """
 
         #ANIMATION
-        global spriteCount        
+              
         if (pygame.time.get_ticks())%8 == 0:
-            spriteN = "jeu/knight_base.00%s.png"%(int(spriteCount))
+            spriteN = "jeu/knight_base.00%s.png"%(int(self.spriteCount))
             self.image = pygame.image.load(spriteN)
-            spriteCount += 1
-            if spriteCount == 7:
-                spriteCount =0
+            self.spriteCount += 1
+            if self.spriteCount == 7:
+                self.spriteCount =0
                 
         
         # gravité
