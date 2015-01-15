@@ -120,6 +120,35 @@ class Platform(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
 
+class boule_de_feu(pygame.sprite.Sprite):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.image = pygame.image.load("jeu/0.png").convert()
+        self.rect = self.image.get_rect()
+        self.rect.y = 0
+
+        self.spriteCount = 0
+        
+
+        
+    def update(self):
+
+        self.pos = pygame.mouse.get_pos()
+        self.rect.y = self.rect.y + 1
+        self.rect.x = self.pos[0]
+        print(self.rect.y)
+        print(self.rect.x)
+        if (pygame.time.get_ticks())%8 == 0:
+            spriteN = "jeu/%s.png"%(int(self.spriteCount))
+            self.image = pygame.image.load(spriteN)
+            self.spriteCount += 1
+            if self.spriteCount == 8:
+                self.spriteCount =0
+            
+
 class Niveau(object):
     #classe des niveaux
 
@@ -196,6 +225,7 @@ def main():
     pygame.display.set_caption("Knight VS Ninja 2")
 
     joueur = Joueur("jeu/knight.png")
+    boule = boule_de_feu()
 
     niveau_list = []
     niveau_list.append(Niveau_01(joueur))
@@ -208,7 +238,9 @@ def main():
 
     joueur.rect.x = 0
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
+    
     active_sprite_list.add(joueur)
+    active_sprite_list.add(boule)
 
     #boucle jusqu'a ce que done = true
     done = False
