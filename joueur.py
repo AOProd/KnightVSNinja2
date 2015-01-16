@@ -1,5 +1,20 @@
 import pygame
-from knight2 import *
+from joueur import *
+from boule import *
+from niveau import *
+from plateforme import *
+BLACK    = (   0,   0,   0)
+WHITE    = ( 255, 255, 255)
+BLUE     = (   0,   0, 255)
+RED      = ( 255,   0,   0)
+GREEN    = (   0, 255,   0)
+ECRAN_LARGEUR  = 800
+ECRAN_HAUTEUR = 600
+size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
+screen = pygame.display.set_mode(size)
+
+###################################################
+
 class Joueur(pygame.sprite.Sprite):
     #classe du joueur
 
@@ -32,7 +47,7 @@ class Joueur(pygame.sprite.Sprite):
         #ANIMATION
         if self.change_y == 0 :      
             if (pygame.time.get_ticks())%8 == 0:
-                spriteN = "jeu/knight_base.00%s.png"%(int(self.spriteCount))
+                spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
                 self.image = pygame.image.load(spriteN)
                 self.spriteCount += 1
                 if self.spriteCount == 7:
@@ -40,11 +55,11 @@ class Joueur(pygame.sprite.Sprite):
             self.spriteJump = 0
         else :
             if self.spriteJump ==0:
-                spriteN = "jeu/knight_saut.000.png"
+                spriteN = "art/knight_saut.000.png"
                 self.image = pygame.image.load(spriteN)
                 self.spriteJump += 1
             elif (pygame.time.get_ticks())%8 == 0 and self.spriteJump<3 :
-                spriteN = "jeu/knight_saut.00%s.png"%(int(self.spriteJump))
+                spriteN = "art/knight_saut.00%s.png"%(int(self.spriteJump))
                 self.image = pygame.image.load(spriteN)
                 self.spriteJump += 1
                 
