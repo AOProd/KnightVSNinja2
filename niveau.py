@@ -26,7 +26,7 @@ class Niveau(object):
 
     # taille du niveau
     monde_shift = 0
-    niveau_limit = -1000
+    niveau_limit = -10000
 
     def __init__(self, joueur):
         self.platform_list = pygame.sprite.Group()
@@ -73,10 +73,10 @@ class Niveau_01(Niveau):
 
 
         # création des plateformes
-        for platform in niveau:
-            block = Platform(platform[0], platform[1])
-            block.rect.x = platform[2]
-            block.rect.y = platform[3]
-            block.joueur = self.joueur
-            self.platform_list.add(block)
+##        for platform in niveau:
+##            block = Platform(platform[0], platform[1])
+##            block.rect.x = platform[2]
+##            block.rect.y = platform[3]
+##            block.joueur = self.joueur
+##            self.platform_list.add(block)
 
