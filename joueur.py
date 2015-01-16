@@ -50,7 +50,7 @@ class Joueur(pygame.sprite.Sprite):
                 spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
                 self.image = pygame.image.load(spriteN)
                 self.spriteCount += 1
-                if self.spriteCount == 8:
+                if self.spriteCount == 7:
                     self.spriteCount = 0
             self.spriteJump = 0
         else :

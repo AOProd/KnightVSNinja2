@@ -35,6 +35,7 @@ class boule_de_feu(pygame.sprite.Sprite):
         # deplacement position/boule
         self.rect.y = self.rect.y + 5
         self.rect.x = self.pos[0]-50
+        print(self.rect.y)
 
         #animation
         if (pygame.time.get_ticks())%8 == 0:
@@ -46,7 +47,7 @@ class boule_de_feu(pygame.sprite.Sprite):
 
         #detection collision sol
         if self.rect.y == 600:
-            del self
+            self.kill()
 
 
             # arrête le mouvement

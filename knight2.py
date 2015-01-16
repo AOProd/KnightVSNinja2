@@ -18,6 +18,7 @@ ECRAN_HAUTEUR = 600
 
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
+
 def main():
     pygame.init()
 
