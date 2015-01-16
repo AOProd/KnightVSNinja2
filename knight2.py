@@ -43,7 +43,7 @@ def main():
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
     
     active_sprite_list.add(joueur)
-    #active_sprite_list.add(boule)
+    #
 
     #boucle jusqu'a ce que done = true
     done = False
@@ -60,6 +60,12 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     joueur.saut()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 3:
+                    boule = boule_de_feu()
+                    active_sprite_list.add(boule)
+                
 
         # actualiser
         active_sprite_list.update()
