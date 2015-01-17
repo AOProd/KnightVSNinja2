@@ -58,14 +58,20 @@ def menu():
 	pygame.display.flip()
 	
 	clic = False
-
+	
+	pygame.mixer.music.load('art/musicmenu.ogg')
+	pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+	pygame.mixer.music.play()
+	
 	while not clic and not done :
 		for event in pygame.event.get(): 
 			if event.type == pygame.QUIT: 
 				done = True
-
-			if event.type == pygame.KEYDOWN:
+			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN:
 					clic = True
+			elif event.type == pygame.constants.USEREVENT:
+				pygame.mixer.music.load('art/musicmenu.ogg')
+				pygame.mixer.music.play()
 	menu.done = done
 	

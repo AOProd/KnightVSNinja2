@@ -71,7 +71,9 @@ def main():
                 if event.button == 3:
                     boule = boule_de_feu()
                     active_sprite_list.add(boule)
-                
+            if event.type == pygame.constants.USEREVENT:
+                    pygame.mixer.music.load('art/musicmenu.ogg')
+                    pygame.mixer.music.play()                
 
         # actualiser
         active_sprite_list.update()
