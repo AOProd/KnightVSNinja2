@@ -23,17 +23,19 @@ def main():
     pygame.init()
 
     #l'écran s'affiche
+    
     size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption("Knight VS Ninja 2")
 
     joueur = Joueur("art/knight.png")
-    #boule = boule_de_feu()
-
+    
+    background_position = [0, 0]
+    background_image = pygame.image.load("art/imagedefond.png").convert()
+    
     niveau_list = []
     niveau_list.append(Niveau_01(joueur))
-
     current_niveau_no = 0
     current_niveau = niveau_list[current_niveau_no]
 
@@ -42,9 +44,8 @@ def main():
 
     joueur.rect.x = 0
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
-    
+
     active_sprite_list.add(joueur)
-    #
 
     #boucle jusqu'a ce que done = true
     done = False
@@ -92,9 +93,10 @@ def main():
                 joueur.niveau = current_niveau
 
         # les dessins en dessous :
-       
         current_niveau.draw(screen)
+        screen.blit(background_image, background_position)
         active_sprite_list.draw(screen)
+
 
         # et au dessus 
 

@@ -46,7 +46,7 @@ class boule_de_feu(pygame.sprite.Sprite):
                 self.spriteCount =0
 
         #detection collision sol
-        if self.rect.y == 600:
+        if self.rect.y == 500:
             self.kill()
 
 

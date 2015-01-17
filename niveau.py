@@ -40,8 +40,7 @@ class Niveau(object):
 
     def draw(self, screen):
         #afficher les sprites et graphiques
-
-        screen.fill(BLUE)
+        screen.fill(BLACK)
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
 
