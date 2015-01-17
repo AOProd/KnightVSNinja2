@@ -21,6 +21,8 @@ size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 
 def main():
+    
+    #boucle jusqu'a ce que done = true
     pygame.init()
 
     #l'écran s'affiche
@@ -50,8 +52,7 @@ def main():
 
     active_sprite_list.add(joueur)
 
-    #boucle jusqu'a ce que done = true
-    done = False
+    done = menu.done
 
     clock = pygame.time.Clock()
 
