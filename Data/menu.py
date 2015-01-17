@@ -33,5 +33,15 @@ def menu():
 	pygame.display.flip()
 	while pygame.time.get_ticks()<6000 :
 		None
+	logo_position = [270, 50]
+	logo = pygame.image.load("art/logo1.png")
+	logo.set_colorkey(BLACK)
+	background_position = [0,0]
+	background = pygame.image.load("art/fondmenu.png").convert()
+	screen.blit(background, background_position)
+	screen.blit(logo, logo_position)
+	pygame.display.flip()
+	while pygame.time.get_ticks()<12000 :
+		None
 
 	
