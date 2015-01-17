@@ -3,6 +3,7 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
+from menu import *
 
 
 # définit les couleurs
@@ -27,6 +28,9 @@ def main():
     size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
     screen = pygame.display.set_mode(size)
 
+    #Menu
+    menu()
+    
     pygame.display.set_caption("Knight VS Ninja 2")
 
     joueur = Joueur("art/knight.png")
