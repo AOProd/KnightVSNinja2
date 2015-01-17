@@ -100,9 +100,9 @@ class Joueur(pygame.sprite.Sprite):
             self.change_y += .35
 
         # test si on est par terre
-        if self.rect.y >= ECRAN_HAUTEUR - self.rect.height and self.change_y >= 0:
+        if self.rect.y >= ECRAN_HAUTEUR - self.rect.height - 150 and self.change_y >= 0:
             self.change_y = 0
-            self.rect.y = ECRAN_HAUTEUR - self.rect.height
+            self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
 
     def saut(self):
 
@@ -112,9 +112,9 @@ class Joueur(pygame.sprite.Sprite):
         self.rect.y -= 2
 
         # saut si on peut
-        if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR:
+        if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
             self.change_y = -10
 
     def stop(self):
-		#quand rien se passe
+		#mouvement vers la droite tout le temps
         self.change_x = 3

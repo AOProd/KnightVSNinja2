@@ -40,7 +40,6 @@ class Niveau(object):
 
     def draw(self, screen):
         #afficher les sprites et graphiques
-        screen.fill(BLACK)
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
 
@@ -72,10 +71,10 @@ class Niveau_01(Niveau):
 
 
         # création des plateformes
-##        for platform in niveau:
-##            block = Platform(platform[0], platform[1])
-##            block.rect.x = platform[2]
-##            block.rect.y = platform[3]
-##            block.joueur = self.joueur
-##            self.platform_list.add(block)
+        for platform in niveau:
+            block = Platform(platform[0], platform[1])
+            block.rect.x = platform[2]
+            block.rect.y = platform[3]
+            block.joueur = self.joueur
+            self.platform_list.add(block)
 

@@ -93,8 +93,10 @@ def main():
                 joueur.niveau = current_niveau
 
         # les dessins en dessous :
-        current_niveau.draw(screen)
         screen.blit(background_image, background_position)
+        
+        current_niveau.draw(screen)
+
         active_sprite_list.draw(screen)
 
 

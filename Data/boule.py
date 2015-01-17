@@ -23,7 +23,7 @@ class boule_de_feu(pygame.sprite.Sprite):
 
         self.image = pygame.image.load("art/0.png").convert()
         self.rect = self.image.get_rect()
-        self.rect.y = 0
+        self.rect.y = -200
 
         self.spriteCount = 0
 
@@ -33,9 +33,8 @@ class boule_de_feu(pygame.sprite.Sprite):
     def update(self):
 
         # deplacement position/boule
-        self.rect.y = self.rect.y + 5
+        self.rect.y = self.rect.y + 15
         self.rect.x = self.pos[0]-50
-        print(self.rect.y)
 
         #animation
         if (pygame.time.get_ticks())%8 == 0:
@@ -46,7 +45,7 @@ class boule_de_feu(pygame.sprite.Sprite):
                 self.spriteCount =0
 
         #detection collision sol
-        if self.rect.y == 500:
+        if self.rect.y > 350:
             self.kill()
 
 
