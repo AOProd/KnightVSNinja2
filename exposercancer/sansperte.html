@@ -25,7 +25,12 @@ Il existe aussi des formats spécifiques au type de fichier comme le PNG qui per
 <h3>RLE</h3>
 <p>RLE (run-length encoding) est un mode de compression très simple permettant de bien faire comprendre ce qu'est la compression sans pertes. Ici, on prend les suites de caractères identiques dans l'information et on les remplace par un couple de deux caractères : le premier définit le nombre de caractères identiques dans la suite et le deuxième définit le nom du caractère répété.</p>
 
-<p>Exemple: <cancer>AAAAAAAAZZEEEEEER</cancer> donne <cancer>8A2Z6E1R</cancer></p>
+<p>Exemple: <cancer>UUUUUUHHHHJJKKKKKD</cancer> donne <cancer>6U4H2J5K1D</cancer></p>
+
+<h3>Codage de Huffman</h3>
+<p>Le codage de Huffman consiste à une analyse préalable du fichier afin de trier les caractères par leur fréquence d'utilisation. Ainsi les caractères qui sont les plus présents seront codés avec le moins de place possible.</p>
+<p>L'idée est la même dans le code Morse. En effet, la lettre "e", très utilisée, est simplement codée avec un point.</p>
+
 <p>&nbsp;</p>
 <p><a href="avecperte.html">Si vous souhaitez découvrir la fantastique histoire de la compression avec pertes cliquez sur cette phrase.</a></p>
 </body>
