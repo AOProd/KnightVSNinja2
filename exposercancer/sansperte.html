@@ -31,6 +31,77 @@ Il existe aussi des formats spécifiques au type de fichier comme le PNG qui per
 <p>Le codage de Huffman consiste à une analyse préalable du fichier afin de trier les caractères par leur fréquence d'utilisation. Ainsi les caractères qui sont les plus présents seront codés avec le moins de place possible.</p>
 <p>L'idée est la même dans le code Morse. En effet, la lettre "e", très utilisée, est simplement codée avec un point.</p>
 
+<p>Exemple avec le mot "LYCEEGEORGESCLEMENCEAU":</p>
+
+<p>La conversion binaire d'un mot nécessite en principe 8bit pour chaque lettre. Cette expression contient 22 lettres, son expression binaire sera donc de 176bits.</p>
+
+<p>Utilisons maintenant la méthode de Huffman. Nous commencerons par trier le nombres de lettres dans le mot dans l'odre croissant : 7E 3C 2L 2G 1Y 1O 1R 1S 1M 1N 1A 1U
+
+<p>Nous allons ensuite établir un arbre de Huffman. Cela consiste à additioner deux par deux ces valeurs de sorte à que chaque paire ai la plus petite valeur possible puis répéter cette étape pour atteindre la somme totale. Il existe différents arbres de Huffman, la méthode expliquée ici est la plus simple mais la moins efficace.</p>
+
+<p>Il faudra ensuite donner une valeur binaire (0 ou 1) à chaque branche de chaque noeud de l'arbre créé. Cela permettra de donner une representation en binaire de chaque lettre en suivant les branches qui mènent à elle.</p>
+
+<p>Voici une visualisation de notre arbre:</p>
+<img src="chart.png" width="554" height="287" />
+
+<p>On observe ici que la representation binaire des lettres plus frequentes (E = 11) est plus petite que celle des lettres moins fréquentes (N = 0001)</p>
+
+<p>Il suffit maintenant de convertir notre mot suivant les representations binaires que l'on a trouvé grâce à notre arbre:
+
+<table>
+   <tr>
+       <td>L</td>
+       <td>Y</td>
+       <td>C</td>
+	   <td>E</td>
+       <td>E</td>
+       <td>G</td>
+	   <td>E</td>
+       <td>O</td>
+       <td>R</td>
+	   <td>G</td>
+       <td>E</td>
+       <td>S</td>
+	   <td>C</td>
+	   <td>L</td>
+       <td>E</td>
+       <td>M</td>
+	   <td>E</td>
+       <td>N</td>
+       <td>C</td>
+	   <td>E</td>
+	   <td>A</td>
+       <td>U</td>
+   </tr>
+   <tr>
+       <td>1011</td>
+       <td>0101</td>
+       <td>100</td>
+	   <td>11</td>
+       <td>11</td>
+       <td>1010</td>
+	   <td>11</td>
+       <td>0000</td>
+       <td>0111</td>
+	   <td>1010</td>
+       <td>11</td>
+       <td>0110</td>
+	   <td>100</td>
+	   <td>1011</td>
+       <td>11</td>
+       <td>0011</td>
+	   <td>11</td>
+       <td>0001</td>
+       <td>100</td>
+	   <td>11</td>
+	   <td>0010</td>
+       <td>0100</td>
+   </tr>
+</table>
+
+<p>TOTAL : 92bits.</p>
+<p>L'information qui sera envoyé sera 52% moins importante cependant le destinataire devra posséder ce même arbre de Huffman pour décompresser le code.</p>
+<p>
 <p>&nbsp;</p>
 <p><a href="avecperte.html">Si vous souhaitez découvrir la fantastique histoire de la compression avec pertes cliquez sur cette phrase.</a></p>
 </body>
