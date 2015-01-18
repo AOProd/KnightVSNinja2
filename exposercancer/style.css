@@ -14,3 +14,9 @@ p {
 	margin-left:5%;
 	margin-right:5%;
 }
+h1 {
+	text-align:center;
+	border:solid;
+	background-image: url(e.png);
+
+}
