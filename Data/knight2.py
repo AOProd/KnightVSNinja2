@@ -59,13 +59,13 @@ def main():
 
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
+    
 #la grande boucle
     while not done:
 	#si cliquer sur fermer
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
                 done = True
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     joueur.saut()
