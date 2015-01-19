@@ -44,7 +44,7 @@ class Joueur(pygame.sprite.Sprite):
         self.spriteAttack=1
         self.spriteCount = 0
         self.spriteJump = 0
-        self.sautage = -13
+        self.sautage = -20
         
     def update(self):
         """ bouger joueur. """
@@ -109,7 +109,7 @@ class Joueur(pygame.sprite.Sprite):
         if self.change_y == 0:
             self.change_y = 1
         else:
-            self.change_y += .35
+            self.change_y += 1
 
         # test si on est par terre
         if self.rect.y >= ECRAN_HAUTEUR - self.rect.height - 150 and self.change_y >= 0:

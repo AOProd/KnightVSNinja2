@@ -30,11 +30,11 @@ class Shuriken(pygame.sprite.Sprite):
         self.image = pygame.image.load("art/shuriken.png")
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y + 10
+        self.rect.y = y + 40
 
     def update(self):
 
-        self.rect.x = self.rect.x - 20
+        self.rect.x -= 15
         print(self.rect.x)
 
         if self.rect.x < 0:

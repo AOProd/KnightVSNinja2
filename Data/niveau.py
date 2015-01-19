@@ -63,18 +63,18 @@ class Niveau_01(Niveau):
         self.niveau_limit = -1300
 
         # mesures des platformes
-        niveau = [[210, 70, 100, 200],
-                 [210, 70, 800, 200],
-                 [210, 70, 1000, 200],
-                 [210, 70, 1120, 200],
-                 ]
+        # niveau = [[210, 70, 100, 200],
+                 # [210, 70, 800, 200],
+                 # [210, 70, 1000, 200],
+                 # [210, 70, 1120, 200],
+                 # ]
 
 
         # création des plateformes
-        for platform in niveau:
-            block = Platform(platform[0], platform[1])
-            block.rect.x = platform[2]
-            block.rect.y = platform[3]
-            block.joueur = self.joueur
-            self.platform_list.add(block)
+        # for platform in niveau:
+            # block = Platform(platform[0], platform[1])
+            # block.rect.x = platform[2]
+            # block.rect.y = platform[3]
+            # block.joueur = self.joueur
+            # self.platform_list.add(block)
 

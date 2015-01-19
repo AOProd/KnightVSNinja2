@@ -25,7 +25,7 @@ class Ninja(pygame.sprite.Sprite):
 
     # vitesse de départ
 
-    change_x = -6
+    change_x = -1
     change_y = 0
 
     def __init__(self):
