@@ -4,7 +4,7 @@ from boule import *
 from niveau import *
 from plateforme import *
 from menu import *
-
+from ninja import *
 
 # définit les couleurs
 BLACK    = (   0,   0,   0)
@@ -32,7 +32,7 @@ def main():
     pygame.display.set_caption("Knight VS Ninja 2")
     
     #Menu
-    menu()
+    #menu()
 
     joueur = Joueur("art/knight.png")
     
@@ -51,11 +51,12 @@ def main():
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
 
     active_sprite_list.add(joueur)
-
-    done = menu.done
+    
+    #done = menu.done
+    done = False
 
     clock = pygame.time.Clock()
-
+    pygame.time.set_timer(1, 100)
 #la grande boucle
     while not done:
 	#si cliquer sur fermer
@@ -66,14 +67,18 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     joueur.saut()
-
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    joueur.attaque()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:
                     boule = boule_de_feu()
                     active_sprite_list.add(boule)
             if event.type == pygame.constants.USEREVENT:
                     pygame.mixer.music.load('art/musicmenu.ogg')
-                    pygame.mixer.music.play()                
+                    pygame.mixer.music.play()
+            if event.type == 1:
+                    joueur.updateAnim()
 
         # actualiser
         active_sprite_list.update()

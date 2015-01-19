@@ -36,34 +36,18 @@ class Joueur(pygame.sprite.Sprite):
 
         # la hitbox
         self.rect = self.image.get_rect()
+		
+        self.attack=False
+
 
         #la variable pour l'animation après
+        self.spriteAttack=0
         self.spriteCount = 0
         self.spriteJump = 0
         
     def update(self):
         """ bouger joueur. """
-
-        #ANIMATION
-        if self.change_y == 0 :      
-            if (pygame.time.get_ticks())%8 == 0:
-                spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
-                self.image = pygame.image.load(spriteN)
-                self.spriteCount += 1
-                if self.spriteCount == 7:
-                    self.spriteCount = 0
-            self.spriteJump = 0
-        else :
-            if self.spriteJump ==0:
-                spriteN = "art/knight_saut.000.png"
-                self.image = pygame.image.load(spriteN)
-                self.spriteJump += 1
-            elif (pygame.time.get_ticks())%8 == 0 and self.spriteJump<3 :
-                spriteN = "art/knight_saut.00%s.png"%(int(self.spriteJump))
-                self.image = pygame.image.load(spriteN)
-                self.spriteJump += 1
-                
-        
+              
         # gravité
         self.calc_grav()
 
@@ -90,6 +74,33 @@ class Joueur(pygame.sprite.Sprite):
 
             # arrête le mouvement
             self.change_y = 0
+    
+    def updateAnim(self):
+        
+        if self.attack == False :
+            if self.change_y == 0 :                     
+                spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
+                self.image = pygame.image.load(spriteN)
+                self.spriteCount += 1
+                if self.spriteCount == 7:
+                    self.spriteCount = 0
+                self.spriteJump = 0
+            else :
+                if self.spriteJump ==0:
+                    spriteN = "art/knight_saut.000.png"
+                    self.image = pygame.image.load(spriteN)
+                    self.spriteJump += 1
+                elif self.spriteJump<3 :
+                    spriteN = "art/knight_saut.00%s.png"%(int(self.spriteJump))
+                    self.image = pygame.image.load(spriteN)
+                    self.spriteJump += 1
+        else:
+            spriteN = "art/knight_attaque.00%s.png"%(int(self.spriteAttack))
+            self.image = pygame.image.load(spriteN)
+            self.spriteAttack += 1
+            if self.spriteAttack == 5:
+                self.attack=False
+                self.spriteAttack = 0
             
 
 
@@ -116,5 +127,10 @@ class Joueur(pygame.sprite.Sprite):
             self.change_y = -10
 
     def stop(self):
-		#mouvement vers la droite tout le temps
+	#mouvement vers la droite tout le temps
         self.change_x = 3
+	
+    def attaque(self):
+	#coup d'épée
+        self.attack=True
+		
