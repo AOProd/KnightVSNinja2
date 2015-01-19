@@ -99,7 +99,7 @@ class Joueur(pygame.sprite.Sprite):
             spriteN = "art/knight_attaque.00%s.png"%(int(self.spriteAttack))
             self.image = pygame.image.load(spriteN)
             self.spriteAttack += 1
-            if self.spriteAttack == 5:
+            if self.spriteAttack == 4:
                 self.attack=False
                 self.spriteAttack = 0
             
