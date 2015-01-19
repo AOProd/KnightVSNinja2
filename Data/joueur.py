@@ -31,12 +31,12 @@ class Joueur(pygame.sprite.Sprite):
         super().__init__() 
 
         # sprite
-        self.image = pygame.image.load(filename).convert()
-        self.image.set_colorkey(BLACK)
+        self.image = pygame.image.load(filename)
 
         # la hitbox
         self.rect = self.image.get_rect()
-		
+        
+        
         self.attack=False
 
 
@@ -44,6 +44,7 @@ class Joueur(pygame.sprite.Sprite):
         self.spriteAttack=0
         self.spriteCount = 0
         self.spriteJump = 0
+        self.sautage = -13
         
     def update(self):
         """ bouger joueur. """
@@ -124,7 +125,7 @@ class Joueur(pygame.sprite.Sprite):
 
         # saut si on peut
         if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
-            self.change_y = -10
+            self.change_y = self.sautage
 
     def stop(self):
 	#mouvement vers la droite tout le temps
