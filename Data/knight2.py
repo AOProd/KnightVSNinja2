@@ -35,6 +35,7 @@ def main():
     #menu()
 
     joueur = Joueur("art/knight.png")
+    ninja = Ninja()
     
     background_position = [0, 0]
     background_image = pygame.image.load("art/imagedefond.png").convert()
@@ -51,6 +52,7 @@ def main():
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
 
     active_sprite_list.add(joueur)
+    active_sprite_list.add(ninja)
     
     #done = menu.done
     done = False
