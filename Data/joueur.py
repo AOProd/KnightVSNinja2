@@ -41,7 +41,7 @@ class Joueur(pygame.sprite.Sprite):
 
 
         #la variable pour l'animation après
-        self.spriteAttack=0
+        self.spriteAttack=1
         self.spriteCount = 0
         self.spriteJump = 0
         self.sautage = -13
@@ -101,7 +101,7 @@ class Joueur(pygame.sprite.Sprite):
             self.spriteAttack += 1
             if self.spriteAttack == 4:
                 self.attack=False
-                self.spriteAttack = 0
+                self.spriteAttack = 1
             
 
 

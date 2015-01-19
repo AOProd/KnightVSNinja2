@@ -5,6 +5,7 @@ from niveau import *
 from plateforme import *
 from menu import *
 from ninja import *
+from shuriken import *
 
 # définit les couleurs
 BLACK    = (   0,   0,   0)
@@ -83,8 +84,16 @@ def main():
                     joueur.updateAnim()
 
         # actualiser
+        
+        if ninja.shuriken_active == True:
+            active_sprite_list.add(ninja.shuriken)
+            
+            
         active_sprite_list.update()
         current_niveau.update()
+
+       
+            
 
         # scrolling
         if joueur.rect.right >= 100:
