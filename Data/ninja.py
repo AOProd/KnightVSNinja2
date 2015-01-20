@@ -35,9 +35,8 @@ class Ninja(pygame.sprite.Sprite):
         self.image = pygame.image.load("art/knight.png")
         self.rect = self.image.get_rect()
         self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
-        self.rect.x = 1500
-        self.shuriken_active = False
         self.rebours = 0
+        self.shuriken_active = False
         
 
     def update(self):

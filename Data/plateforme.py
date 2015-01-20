@@ -19,7 +19,7 @@ class Platform(pygame.sprite.Sprite):
 
 
     def __init__(self, LARGEUR, HAUTEUR):
-        #constructeur des platform
+        #constructeur des platformes
         super().__init__()
 
         self.image = pygame.Surface([LARGEUR, HAUTEUR])

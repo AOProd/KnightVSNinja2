@@ -36,7 +36,6 @@ def main():
     #menu()
 
     joueur = Joueur("art/knight.png")
-    ninja = Ninja()
     
     background_position = [0, 0]
     background_image = pygame.image.load("art/imagedefond.png").convert()
@@ -53,7 +52,6 @@ def main():
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
 
     active_sprite_list.add(joueur)
-    active_sprite_list.add(ninja)
     
     #done = menu.done
     done = False
@@ -82,13 +80,15 @@ def main():
                     pygame.mixer.music.play()
             if event.type == 1:
                     joueur.updateAnim()
-
+                    
+        #detection etat
+                    
+        if current_niveau.nin.shuriken_active == True:
+            active_sprite_list.add(current_niveau.nin.shuriken)
+            current_niveau.nin.shuriken_active == False
+            
         # actualiser
-        
-        if ninja.shuriken_active == True:
-            active_sprite_list.add(ninja.shuriken)
-            
-            
+                    
         active_sprite_list.update()
         current_niveau.update()
 
@@ -116,9 +116,7 @@ def main():
 
         # les dessins en dessous :
         screen.blit(background_image, background_position)
-        
         current_niveau.draw(screen)
-
         active_sprite_list.draw(screen)
 
 

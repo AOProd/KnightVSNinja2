@@ -3,6 +3,7 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
+from ninja import *
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 BLUE     = (   0,   0, 255)
@@ -60,21 +61,30 @@ class Niveau_01(Niveau):
 
         Niveau.__init__(self, joueur)
 
-        self.niveau_limit = -1300
+        self.niveau_limit = -3000
 
-        # mesures des platformes
-        # niveau = [[210, 70, 100, 200],
-                 # [210, 70, 800, 200],
-                 # [210, 70, 1000, 200],
-                 # [210, 70, 1120, 200],
-                 # ]
+        #mesures des platformes
+        plateformes_niveau = [[210, 70, 100, 200],
+                 [210, 70, 800, 200],
+                 [210, 70, 1000, 200],
+                 [210, 70, 1120, 200],
+                 ]
 
 
-        # création des plateformes
-        # for platform in niveau:
-            # block = Platform(platform[0], platform[1])
-            # block.rect.x = platform[2]
-            # block.rect.y = platform[3]
-            # block.joueur = self.joueur
-            # self.platform_list.add(block)
+        #création des plateformes
+        for platform in plateformes_niveau:
+            block = Platform(platform[0], platform[1])
+            block.rect.x = platform[2]
+            block.rect.y = platform[3]
+            block.joueur = self.joueur
+            self.platform_list.add(block)
+
+        #mesures de ninjas
+        ninjas_niveau = [1000,2000,3000,4000,5000]
+
+        #creation ninjas
+        for ninja in ninjas_niveau:
+            self.nin = Ninja()
+            self.nin.rect.x = ninja
+            self.enemy_list.add(self.nin)
 

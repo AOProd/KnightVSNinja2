@@ -26,19 +26,27 @@ class Shuriken(pygame.sprite.Sprite):
     def __init__(self,x,y):
 
         super().__init__()
-        
         self.image = pygame.image.load("art/shuriken.png")
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y + 40
+        self.spriteimage = 0
+        print(self.rect.x)
 
     def update(self):
 
         self.rect.x -= 15
-        print(self.rect.x)
+        
+        sprite_shuriken = "art/shuriken.00%s.png"%(int(self.spriteimage))
+        self.image = pygame.image.load(sprite_shuriken)
+        self.spriteimage += 1
+        
+        if self.spriteimage == 3:
+            self.spriteimage = 0
 
         if self.rect.x < 0:
             self.kill()
+
         
         
     
