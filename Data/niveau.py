@@ -80,7 +80,7 @@ class Niveau_01(Niveau):
             self.platform_list.add(block)
 
         #mesures de ninjas
-        ninjas_niveau = [1000,2000,3000,4000,5000]
+        ninjas_niveau = [1000,2000]
 
         #creation ninjas
         for ninja in ninjas_niveau:

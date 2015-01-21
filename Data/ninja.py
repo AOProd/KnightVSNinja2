@@ -37,19 +37,34 @@ class Ninja(pygame.sprite.Sprite):
         self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
         self.rebours = 0
         self.shuriken_active = False
-        
+        self.actif = False
+
+    def NinjaActif(self,x):
+        if x < 800:
+            self.actif = True
 
     def update(self):
 
-        if self.rebours == 100:
-            self.shuriken = Shuriken(self.rect.x,self.rect.y)
-            self.shuriken_active = True
-            self.rebours = 0
+        self.NinjaActif(self.rect.x)
+
+        if self.actif == True:
+        
+            self.rect.x += self.change_x
             
-        else:
-            self.rebours += 1
+            if self.rebours == 100:
+                print("CANCER",self.rect.x)
+                self.shuriken = Shuriken(self.rect.x,self.rect.y)
+                self.shuriken_active = True
+                self.rebours = 0
             
-        self.rect.x += self.change_x
+            else:
+                self.rebours += 1
+
+            if self.rect.x < 0:
+                self.actif = False
+                self.kill()
+            
+        
 
         
 
