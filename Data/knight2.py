@@ -32,10 +32,12 @@ def main():
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("Knight VS Ninja 2")
     
-    #Menu
+        #Menu
     #menu()
-
+    #done = menu.done
+    
     joueur = Joueur("art/knight.png")
+    joueurAnim = JoueurSprite()
     
     background_position = [0, 0]
     background_image = pygame.image.load("art/imagedefond.png").convert()
@@ -53,7 +55,7 @@ def main():
 
     active_sprite_list.add(joueur)
     
-    #done = menu.done
+
     done = False
 
     clock = pygame.time.Clock()
@@ -71,6 +73,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     joueur.attaque()
+                    joueurAnim.attaque()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:
                     boule = boule_de_feu()
@@ -79,7 +82,7 @@ def main():
                     pygame.mixer.music.load('art/musicmenu.ogg')
                     pygame.mixer.music.play()
             if event.type == 1:
-                    joueur.updateAnim()
+                    joueurAnim.updateAnim()
                     
         #detection etat
                     
@@ -88,7 +91,7 @@ def main():
             current_niveau.nin.shuriken_active == False
             
         # actualiser
-                    
+        joueurAnim.update(joueur.change_x,joueur.change_y,joueur.rect.x,joueur.rect.y)            
         active_sprite_list.update()
         current_niveau.update()
 
@@ -117,8 +120,9 @@ def main():
         # les dessins en dessous :
         screen.blit(background_image, background_position)
         current_niveau.draw(screen)
-        active_sprite_list.draw(screen)
 
+        active_sprite_list.draw(screen)
+        screen.blit(joueurAnim.image, [joueurAnim.rect.x,joueurAnim.rect.y])
 
         # et au dessus 
 

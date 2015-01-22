@@ -41,9 +41,7 @@ class Joueur(pygame.sprite.Sprite):
 
 
         #la variable pour l'animation après
-        self.spriteAttack=1
-        self.spriteCount = 0
-        self.spriteJump = 0
+
         self.sautage = -20
         
     def update(self):
@@ -76,35 +74,8 @@ class Joueur(pygame.sprite.Sprite):
             # arrête le mouvement
             self.change_y = 0
     
-    def updateAnim(self):
-        
-        if self.attack == False :
-            if self.change_y == 0 :                     
-                spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
-                self.image = pygame.image.load(spriteN)
-                self.spriteCount += 1
-                if self.spriteCount == 7:
-                    self.spriteCount = 0
-                self.spriteJump = 0
-            else :
-                if self.spriteJump ==0:
-                    spriteN = "art/knight_saut.000.png"
-                    self.image = pygame.image.load(spriteN)
-                    self.spriteJump += 1
-                elif self.spriteJump<3 :
-                    spriteN = "art/knight_saut.00%s.png"%(int(self.spriteJump))
-                    self.image = pygame.image.load(spriteN)
-                    self.spriteJump += 1
-        else:
-            spriteN = "art/knight_attaque.00%s.png"%(int(self.spriteAttack))
-            self.image = pygame.image.load(spriteN)
-            self.spriteAttack += 1
-            if self.spriteAttack == 4:
-                self.attack=False
-                self.spriteAttack = 1
-            
 
-
+           
     def calc_grav(self):
         if self.change_y == 0:
             self.change_y = 1
@@ -135,3 +106,54 @@ class Joueur(pygame.sprite.Sprite):
 	#coup d'épée
         self.attack=True
 		
+class JoueurSprite():
+    change_x = 3
+    change_y = 0
+    def __init__(self):
+
+        super().__init__() 
+        self.image = pygame.image.load("art/knight_base.000.png")
+        self.rect = self.image.get_rect()
+        self.spriteAttack=1
+        self.spriteCount = 0
+        self.spriteJump = 0
+        self.attack = False
+        
+    def update(self, changex, changey, x, y):
+    
+        self.change_x = changex
+        self.change_y = changey
+        self.rect.x = x
+        self.rect.y = y-25
+     
+    def updateAnim(self):
+        
+        if self.attack == False :
+            if self.change_y == 0 :                     
+                spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
+                self.image = pygame.image.load(spriteN)
+                self.spriteCount += 1
+                if self.spriteCount == 7:
+                    self.spriteCount = 0
+                self.spriteJump = 0
+            else :
+                if self.spriteJump == 0:
+                    spriteN = "art/knight_saut.000.png"
+                    self.image = pygame.image.load(spriteN)
+                    self.spriteJump += 1
+                elif self.spriteJump < 3 :
+                    spriteN = "art/knight_saut.00%s.png"%(int(self.spriteJump))
+                    self.image = pygame.image.load(spriteN)
+                    self.spriteJump += 1
+        else:
+            spriteN = "art/knight_attaque.00%s.png"%(int(self.spriteAttack))
+            self.image = pygame.image.load(spriteN)
+            self.spriteAttack += 1
+            if self.spriteAttack == 4:
+                self.attack=False
+                self.spriteAttack = 1
+                
+    def attaque(self):
+	#coup d'épée
+        self.attack=True
+        

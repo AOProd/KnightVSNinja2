@@ -32,7 +32,7 @@ class Ninja(pygame.sprite.Sprite):
 
         super().__init__()
 
-        self.image = pygame.image.load("art/knight.png")
+        self.image = pygame.image.load("art/knight_base.000.png")
         self.rect = self.image.get_rect()
         self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
         self.rebours = 0
