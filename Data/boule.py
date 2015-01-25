@@ -33,7 +33,7 @@ class boule_de_feu(pygame.sprite.Sprite):
     def update(self):
 
         # deplacement position/boule
-        self.rect.y = self.rect.y + 15
+        self.rect.y = self.rect.y + 25
         self.rect.x = self.pos[0]-50
 
         #animation
