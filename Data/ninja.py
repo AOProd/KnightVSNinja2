@@ -58,10 +58,10 @@ class Ninja(pygame.sprite.Sprite,object):
             #corps a corps
             if pygame.sprite.collide_rect(self.joueur,self): 
                 self.rect.left = self.joueur.rect.right
-                if self.rebours == 10:
+                if self.rebours == 100:
                     self.Attaque()
                 else :
-                    self.rebours += 100
+                    self.rebours += 1
                 if (pygame.time.get_ticks())%8 == 0: #animation attaquer (cancer)
                     if self.attaque == True:
                         spriteA = "art/ninjaattaque%s.png"%(int(self.spriteCount2))
