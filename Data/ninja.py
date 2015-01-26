@@ -41,6 +41,7 @@ class Ninja(pygame.sprite.Sprite,object):
         self.actif = False
         self.joueur = joueur
         self.spriteCount = 0
+        
     def NinjaActif(self,x):
         if x < 800:
             self.actif = True
@@ -60,7 +61,6 @@ class Ninja(pygame.sprite.Sprite,object):
                     self.spriteCount =0            
             
             if self.rebours == 100:
-                print("CANCER",self.rect.x)
                 self.shuriken = Shuriken(self.rect.x,self.rect.y)
                 self.shuriken_active = True
                 self.rebours = 0

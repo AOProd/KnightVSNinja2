@@ -90,12 +90,6 @@ def main():
                     pygame.mixer.music.play()
             if event.type == 1:
                     joueurAnim.updateAnim()
-                    
-        #detection etat
-                    
-        if current_niveau.nin.shuriken_active == True:
-            active_sprite_list.add(current_niveau.nin.shuriken)
-            current_niveau.nin.shuriken_active == False
             
         # actualiser
         joueurAnim.update(joueur.change_x,joueur.change_y,joueur.rect.x,joueur.rect.y)            

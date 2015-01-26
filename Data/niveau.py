@@ -24,6 +24,7 @@ class Niveau(object):
     #images et tout
     platform_list = None
     enemy_list = None
+    shuriken_list = None
 
     fond = None
 
@@ -34,17 +35,24 @@ class Niveau(object):
     def __init__(self, joueur):
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
+        self.shuriken_list = pygame.sprite.Group()
         self.joueur = joueur
 
     # actualisation
     def update(self):
+        for ninja in self.enemy_list:
+            if ninja.shuriken_active == True:
+                self.shuriken_list.add(ninja.shuriken)
+                ninja.shuriken_active = False
         self.platform_list.update()
         self.enemy_list.update()
+        self.shuriken_list.update()
 
     def draw(self, screen):
         #afficher les sprites et graphiques
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
+        self.shuriken_list.draw(screen)
 
     def shift_monde(self, shift_x):
         #scrolling
@@ -55,6 +63,7 @@ class Niveau(object):
 
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
+
 
 # créer le premier niveau
 class Niveau_01(Niveau):
