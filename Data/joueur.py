@@ -3,6 +3,9 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
+from menu import *
+from ninja import *
+from shuriken import *
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 BLUE     = (   0,   0, 255)
@@ -43,21 +46,30 @@ class Joueur(pygame.sprite.Sprite):
         #la variable pour l'animation après
 
         self.sautage = -20
+
+        self.vie = 5
+        self.bouclier = 10
         
     def update(self):
-        """ bouger joueur. """
-              
+        """ bouger joueur. """   
         # gravité
         self.calc_grav()
 
         # mouvement horizontal
         self.rect.x += self.change_x
-
+        self.stop()
         # test de collision
         block_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
         for block in block_hit_list:
             self.rect.right = block.rect.left
-
+            
+        enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
+        for ninja in enemy_hit_list:
+            self.change_x = 0
+            self.vie -= 1
+            
+            
+            
         # mouvement vertical
         self.rect.y += self.change_y
 
@@ -74,7 +86,8 @@ class Joueur(pygame.sprite.Sprite):
             # arrête le mouvement
             self.change_y = 0
     
-
+        if self.vie <= 0:
+            self.vie = 5
            
     def calc_grav(self):
         if self.change_y == 0:

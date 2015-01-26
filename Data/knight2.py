@@ -6,6 +6,7 @@ from plateforme import *
 from menu import *
 from ninja import *
 from shuriken import *
+from hud import *
 
 # définit les couleurs
 BLACK    = (   0,   0,   0)
@@ -33,8 +34,8 @@ def main():
     pygame.display.set_caption("Knight VS Ninja 2")
     
         #Menu
-    menu()
-    done = menu.done
+    #menu()
+    #done = menu.done
     
     joueur = Joueur("art/knight.png")
     joueurAnim = JoueurSprite()
@@ -48,12 +49,18 @@ def main():
     current_niveau = niveau_list[current_niveau_no]
 
     active_sprite_list = pygame.sprite.Group()
+    hud_sprite_list = pygame.sprite.Group()
+    
     joueur.niveau = current_niveau
 
     joueur.rect.x = 0
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
 
+    vie = Barre_de_vie(joueur)
+
     active_sprite_list.add(joueur)
+
+
     
 
     done = False
@@ -94,6 +101,8 @@ def main():
         joueurAnim.update(joueur.change_x,joueur.change_y,joueur.rect.x,joueur.rect.y)            
         active_sprite_list.update()
         current_niveau.update()
+        vie.update()
+
 
        
             
@@ -120,8 +129,9 @@ def main():
         # les dessins en dessous :
         screen.blit(background_image, background_position)
         current_niveau.draw(screen)
-
+    
         active_sprite_list.draw(screen)
+        screen.blit(vie.image, [30,30])
         screen.blit(joueurAnim.image, [joueurAnim.rect.x,joueurAnim.rect.y])
 
         # et au dessus 

@@ -3,7 +3,9 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
+from menu import *
 from ninja import *
+from shuriken import *
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 BLUE     = (   0,   0, 255)
@@ -84,7 +86,7 @@ class Niveau_01(Niveau):
 
         #creation ninjas
         for ninja in ninjas_niveau:
-            self.nin = Ninja()
+            self.nin = Ninja(self.joueur)
             self.nin.rect.x = ninja
             self.enemy_list.add(self.nin)
 
