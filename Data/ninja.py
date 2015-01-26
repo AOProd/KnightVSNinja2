@@ -39,34 +39,58 @@ class Ninja(pygame.sprite.Sprite,object):
         self.rebours = 0
         self.shuriken_active = False
         self.actif = False
+        self.attaque = False
         self.joueur = joueur
         self.spriteCount = 0
+        self.spriteCount2 = 0
         
     def NinjaActif(self,x):
         if x < 800:
             self.actif = True
 
+    def Attaque(self):
+        self.attaque = True
+
     def update(self):
         self.NinjaActif(self.rect.x)
 
         if self.actif == True:
-            if pygame.sprite.collide_rect(self.joueur,self):
+            #corps a corps
+            if pygame.sprite.collide_rect(self.joueur,self): 
                 self.rect.left = self.joueur.rect.right
-                
-            if (pygame.time.get_ticks())%8 == 0:
-                spriteN = "art/ninja_base.00%s.png"%(int(self.spriteCount))
-                self.image = pygame.image.load(spriteN)
-                self.spriteCount += 1
-                if self.spriteCount == 4:
-                    self.spriteCount =0            
-            
-            if self.rebours == 100:
-                self.shuriken = Shuriken(self.rect.x,self.rect.y)
-                self.shuriken_active = True
-                self.rebours = 0
-            
+                if self.rebours == 10:
+                    self.Attaque()
+                else :
+                    self.rebours += 100
+                if (pygame.time.get_ticks())%8 == 0: #animation attaquer (cancer)
+                    if self.attaque == True:
+                        spriteA = "art/ninjaattaque%s.png"%(int(self.spriteCount2))
+                        self.image = pygame.image.load(spriteA)
+                        self.spriteCount2 += 1
+                        if self.spriteCount2 == 3:
+                            self.spriteCount2 = 0
+                            self.attaque = False
+                            self.rebours = 0
+                            self.image = pygame.image.load("art/ninja_base.000.png")
+            #a distance
             else:
-                self.rebours += 1
+                
+                if self.rebours == 100:
+                        self.shuriken = Shuriken(self.rect.x,self.rect.y)
+                        self.shuriken_active = True
+                        self.rebours = 0
+
+                else:
+                    self.rebours += 1
+                         
+                if (pygame.time.get_ticks())%8 == 0: #animation marcher
+                    spriteN = "art/ninja_base.00%s.png"%(int(self.spriteCount))
+                    self.image = pygame.image.load(spriteN)
+                    self.spriteCount += 1
+                    if self.spriteCount == 4:
+                        self.spriteCount =0            
+            
+                
 
             if self.rect.x < 0:
                 self.actif = False
