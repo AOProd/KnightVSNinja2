@@ -68,10 +68,12 @@ class Ninja(pygame.sprite.Sprite,object):
                         self.image = pygame.image.load(spriteA)
                         self.spriteCount2 += 1
                         if self.spriteCount2 == 3:
+                            self.joueur.vie -= 1
+                        if self.spriteCount2 == 4:
                             self.spriteCount2 = 0
                             self.attaque = False
                             self.rebours = 0
-                            self.image = pygame.image.load("art/ninja_base.000.png")
+    
             #a distance
             else:
                 
