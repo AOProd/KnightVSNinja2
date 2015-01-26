@@ -31,7 +31,6 @@ class Shuriken(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y + 40
         self.spriteimage = 0
-        print(self.rect.x)
 
     def update(self):
 
@@ -46,6 +45,7 @@ class Shuriken(pygame.sprite.Sprite):
 
         if self.rect.x < 0:
             self.kill()
+
 
         
         

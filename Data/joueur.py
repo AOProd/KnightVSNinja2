@@ -65,7 +65,12 @@ class Joueur(pygame.sprite.Sprite):
             
         enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
         for ninja in enemy_hit_list:
-            self.change_x = 0                        
+            self.change_x = 0
+
+        shuriken_hit_list = pygame.sprite.spritecollide(self, self.niveau.shuriken_list, False)
+        for shuriken in shuriken_hit_list:
+            self.vie -= 1
+            shuriken.kill()
             
         # mouvement vertical
         self.rect.y += self.change_y
