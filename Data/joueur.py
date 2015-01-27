@@ -66,7 +66,7 @@ class Joueur(pygame.sprite.Sprite):
         enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
         for ninja in enemy_hit_list:
             self.change_x = 0
-
+                    
         shuriken_hit_list = pygame.sprite.spritecollide(self, self.niveau.shuriken_list, False)
         for shuriken in shuriken_hit_list:
             self.vie -= 1
@@ -124,6 +124,9 @@ class Joueur(pygame.sprite.Sprite):
 class JoueurSprite():
     change_x = 3
     change_y = 0
+
+    niveau = None
+    
     def __init__(self):
 
         super().__init__() 
@@ -165,6 +168,9 @@ class JoueurSprite():
             self.image = pygame.image.load(spriteN)
             self.spriteAttack += 1
             if self.spriteAttack == 4:
+                enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
+                for ninja in enemy_hit_list:
+                    ninja.vie -= 1
                 self.attack=False
                 self.spriteAttack = 1
                 

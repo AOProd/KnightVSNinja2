@@ -43,6 +43,7 @@ class Ninja(pygame.sprite.Sprite,object):
         self.joueur = joueur
         self.spriteCount = 0
         self.spriteCount2 = 0
+        self.vie = 5
         
     def NinjaActif(self,x):
         if x < 800:
@@ -97,7 +98,10 @@ class Ninja(pygame.sprite.Sprite,object):
             if self.rect.x < 0:
                 self.actif = False
                 self.kill()
-            
+
+            if self.vie <= 0:
+                self.kill()
+                
         self.rect.x += self.change_x
 
         

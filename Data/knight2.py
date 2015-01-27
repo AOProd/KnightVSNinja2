@@ -52,6 +52,7 @@ def main():
     hud_sprite_list = pygame.sprite.Group()
     
     joueur.niveau = current_niveau
+    joueurAnim.niveau = current_niveau
 
     joueur.rect.x = 0
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
@@ -95,10 +96,7 @@ def main():
         joueurAnim.update(joueur.change_x,joueur.change_y,joueur.rect.x,joueur.rect.y)            
         active_sprite_list.update()
         current_niveau.update()
-        vie.update()
-
-
-       
+        vie.update()        
             
 
         # scrolling
