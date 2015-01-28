@@ -75,10 +75,10 @@ class Niveau_01(Niveau):
         self.niveau_limit = -3000
 
         #mesures des platformes
-        plateformes_niveau = [[210, 70, 100, 200],
-                 [210, 70, 800, 200],
-                 [210, 70, 1000, 200],
-                 [210, 70, 1120, 200],
+        plateformes_niveau = [[210, 20, 100, 300],
+                 [150, 20, 800, 300],
+                 [150, 20, 1000, 300],
+                 [150, 20, 1120, 300],
                  ]
 
 

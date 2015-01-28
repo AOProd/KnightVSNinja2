@@ -41,23 +41,23 @@ class Joueur(pygame.sprite.Sprite):
         
         
         self.attack=False
-
+        self.base=True
 
         #la variable pour l'animation après
 
         self.sautage = -20
-
+        
         self.vie = 5
         self.bouclier = 10
         
     def update(self):
         """ bouger joueur. """   
         # gravité
-        self.calc_grav()
+        self.gravite()
 
         # mouvement horizontal
         self.rect.x += self.change_x
-        self.stop()
+        self.normal()
         # test de collision
         block_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
         for block in block_hit_list:
@@ -91,7 +91,7 @@ class Joueur(pygame.sprite.Sprite):
         if self.vie <= 0:
             self.vie = 5
            
-    def calc_grav(self):
+    def gravite(self):
         if self.change_y == 0:
             self.change_y = 1
         else:
@@ -113,13 +113,17 @@ class Joueur(pygame.sprite.Sprite):
         if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
             self.change_y = self.sautage
 
-    def stop(self):
+    def normal(self):
 	#mouvement vers la droite tout le temps
         self.change_x = 3
+        self.base = True
 	
     def attaque(self):
 	#coup d'épée
         self.attack=True
+        enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
+        for ninja in enemy_hit_list:
+            ninja.vie -= 1
 		
 class JoueurSprite():
     change_x = 3
@@ -167,9 +171,7 @@ class JoueurSprite():
             self.image = pygame.image.load(spriteN)
             self.spriteAttack += 1
             if self.spriteAttack == 4:
-                enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
-                for ninja in enemy_hit_list:
-                    ninja.vie -= 1
+
                 self.joueur.attack=False
                 self.spriteAttack = 1
                 

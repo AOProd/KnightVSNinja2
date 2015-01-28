@@ -54,11 +54,16 @@ class Ninja(pygame.sprite.Sprite,object):
 
     def update(self):
         self.NinjaActif(self.rect.x)
+        if self.rect.x < 0:
+            self.actif = False
+            self.kill()
 
+        if self.vie <= 0:
+            self.kill()
         if self.actif == True:
             #corps a corps
             if pygame.sprite.collide_rect(self.joueur,self): 
-                self.rect.left = self.joueur.rect.right
+                self.rect.left = self.joueur.rect.right-30
                 if self.rebours == 100:
                     self.Attaque()
                 else :
@@ -95,12 +100,7 @@ class Ninja(pygame.sprite.Sprite,object):
             
                 
 
-            if self.rect.x < 0:
-                self.actif = False
-                self.kill()
 
-            if self.vie <= 0:
-                self.kill()
                 
         self.rect.x += self.change_x
 
