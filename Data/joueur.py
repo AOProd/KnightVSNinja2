@@ -127,9 +127,10 @@ class JoueurSprite():
 
     niveau = None
     
-    def __init__(self):
+    def __init__(self,joueur):
 
         super().__init__() 
+        self.joueur = joueur
         self.image = pygame.image.load("art/knight_base.000.png")
         self.rect = self.image.get_rect()
         self.spriteAttack=1
@@ -137,17 +138,15 @@ class JoueurSprite():
         self.spriteJump = 0
         self.attack = False
         
-    def update(self, changex, changey, x, y):
+    def update(self):
     
-        self.change_x = changex
-        self.change_y = changey
-        self.rect.x = x
-        self.rect.y = y-25
+        self.rect.x = self.joueur.rect.x
+        self.rect.y = self.joueur.rect.y-25
      
     def updateAnim(self):
         
-        if self.attack == False :
-            if self.change_y == 0 :                     
+        if self.joueur.attack == False :
+            if self.joueur.change_y == 0 :                     
                 spriteN = "art/knight_base.00%s.png"%(int(self.spriteCount))
                 self.image = pygame.image.load(spriteN)
                 self.spriteCount += 1
@@ -171,10 +170,7 @@ class JoueurSprite():
                 enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
                 for ninja in enemy_hit_list:
                     ninja.vie -= 1
-                self.attack=False
+                self.joueur.attack=False
                 self.spriteAttack = 1
                 
-    def attaque(self):
-	#coup d'épée
-        self.attack=True
         

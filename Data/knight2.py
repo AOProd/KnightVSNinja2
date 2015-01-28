@@ -38,7 +38,7 @@ def main():
     #done = menu.done
     
     joueur = Joueur("art/knight.png")
-    joueurAnim = JoueurSprite()
+    joueurAnim = JoueurSprite(joueur)
     
     background_position = [0, 0]
     background_image = pygame.image.load("art/imagedefond.png").convert()
@@ -81,7 +81,6 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     joueur.attaque()
-                    joueurAnim.attaque()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:
                     boule = boule_de_feu()
@@ -93,7 +92,8 @@ def main():
                     joueurAnim.updateAnim()
             
         # actualiser
-        joueurAnim.update(joueur.change_x,joueur.change_y,joueur.rect.x,joueur.rect.y)            
+        
+        joueurAnim.update()            
         active_sprite_list.update()
         current_niveau.update()
         vie.update()        
@@ -106,6 +106,7 @@ def main():
             current_niveau.shift_monde(-diff)
             
         # changement de niveau et tout
+        
         current_position = joueur.rect.x + current_niveau.monde_shift
         if current_position < current_niveau.niveau_limit:
             if current_niveau_no < len(niveau_list)-1:
@@ -119,6 +120,7 @@ def main():
                 joueur.niveau = current_niveau
 
         # les dessins en dessous :
+        
         screen.blit(background_image, background_position)
         current_niveau.draw(screen)
     
@@ -126,7 +128,7 @@ def main():
         screen.blit(vie.image, [30,30])
         screen.blit(joueurAnim.image, [joueurAnim.rect.x,joueurAnim.rect.y])
 
-        # et au dessus 
+        #
 
 
         clock.tick(60)
