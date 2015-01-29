@@ -26,29 +26,42 @@ class boule_de_feu(pygame.sprite.Sprite):
         self.rect.y = -200
 
         self.spriteCount = 0
-
+        self.impact = 0
+        self.pause = 0
+        
         self.pos = pygame.mouse.get_pos()
 
         
     def update(self):
 
-        # deplacement position/boule
-        self.rect.y = self.rect.y + 25
-        self.rect.x = self.pos[0]-50
-
-        #animation
-        if (pygame.time.get_ticks())%8 == 0:
-            spriteN = "art/%s.png"%(int(self.spriteCount))
-            self.image = pygame.image.load(spriteN)
-            self.spriteCount += 1
-            if self.spriteCount == 5:
-                self.spriteCount =0
-
         #detection collision sol
-        if self.rect.y > 350:
-            self.kill()
+        if self.rect.y > 350 and self.impact == 0:
+            self.impact = 1
+            self.image = pygame.image.load("art/impact.png").convert()
+            self.rect.x = self.rect.x - 80
+            self.rect.y = self.rect.y - 40
+            
 
 
-            # arrête le mouvement
-            self.change_y = 0
-        
+        if self.impact == 1:
+            self.image.set_alpha(255-self.pause*2.55)
+            self.image.set_colorkey(BLACK)
+            self.pause += 1            
+            if self.pause == 100:
+                self.kill()
+
+                        
+        else:
+            # deplacement position/boule
+            self.rect.y = self.rect.y + 25
+            self.rect.x = self.pos[0]-50
+            
+            #animation
+            if (pygame.time.get_ticks())%8 == 0:
+                spriteN = "art/%s.png"%(int(self.spriteCount))
+                self.image = pygame.image.load(spriteN)
+                self.spriteCount += 1
+                if self.spriteCount == 5:
+                    self.spriteCount =0
+
+
