@@ -49,6 +49,10 @@ class Ninja(pygame.sprite.Sprite,object):
         if x < 800:
             self.actif = True
 
+    def tuer(self):
+        #faut faire lanim de la mor ici ^^
+        self.kill()
+
     def Attaque(self):
         self.attaque = True
 

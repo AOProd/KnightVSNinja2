@@ -84,6 +84,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:
                     boule = boule_de_feu()
+                    boule.niveau = current_niveau
                     active_sprite_list.add(boule)
             if event.type == pygame.constants.USEREVENT:
                     pygame.mixer.music.load('art/musicmenu.ogg')
