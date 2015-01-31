@@ -49,6 +49,7 @@ class Joueur(pygame.sprite.Sprite):
         
         self.vie = 5
         self.bouclier = 10
+        self.boule_de_feu = 10
         
     def update(self):
         """ bouger joueur. """   

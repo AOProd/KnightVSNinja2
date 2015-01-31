@@ -49,7 +49,7 @@ def main():
     current_niveau = niveau_list[current_niveau_no]
 
     active_sprite_list = pygame.sprite.Group()
-    hud_sprite_list = pygame.sprite.Group()
+    hud_list = pygame.sprite.Group()
     
     joueur.niveau = current_niveau
     joueurAnim.niveau = current_niveau
@@ -57,7 +57,11 @@ def main():
     joueur.rect.x = 0
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
 
-    vie = Barre_de_vie(joueur)
+    #hud
+    barre_de_vie = Barre_de_vie(joueur)
+    barre_de_bouclier = Barre_de_bouclier(joueur)
+    barre_de_boule_de_feu = Barre_de_boule_de_feu(joueur)
+    hud_list.add(barre_de_vie,barre_de_bouclier,barre_de_boule_de_feu)
 
     active_sprite_list.add(joueur)
 
@@ -97,7 +101,7 @@ def main():
         joueurAnim.update()            
         active_sprite_list.update()
         current_niveau.update()
-        vie.update()        
+        hud_list.update()
             
 
         # scrolling
@@ -126,8 +130,8 @@ def main():
         current_niveau.draw(screen)
     
         active_sprite_list.draw(screen)
-        screen.blit(vie.image, [30,30])
         screen.blit(joueurAnim.image, [joueurAnim.rect.x,joueurAnim.rect.y])
+        hud_list.draw(screen)
 
         #
 

@@ -16,38 +16,58 @@ size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 
 ###################################################
-
-class Barre_de_vie():
-
-    def __init__(self,joueur):
-
-        super().__init__()
-
-        self.joueur = joueur
-        self.valeur = self.joueur.vie
-        self.image = pygame.Surface([self.joueur.vie*80,30])
-        self.image.fill(RED)
-        self.rect = self.image.get_rect
-
-    def update(self):
-
-        self.image = pygame.Surface([self.joueur.vie*80,30])
-        self.image.fill(RED)
-
-class Barre_de_bouclier():
-
-    def __init__(self,joueur):
-
-        super().__init__()
-
-        self.joueur = joueur
-        self.valeur = self.joueur.bouclier
-        self.image = pygame.Surface([self.joueur.vie*80,30])
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect
-
-    def update(self):
-
-        self.image = pygame.Surface([self.joueur.vie*80,30])
-        self.image.fill(RED)
     
+class Barre_de_vie(pygame.sprite.Sprite):
+
+    def __init__(self,joueur):
+
+        super().__init__()
+
+        self.joueur = joueur
+        self.valeur_vie = self.joueur.vie
+        self.image = pygame.Surface([self.joueur.vie*80,30])
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.rect.x = 25
+        self.rect.y = 25
+
+    def update(self):
+
+        self.image = pygame.Surface([self.joueur.vie*80,30])
+        self.image.fill(RED)
+        
+class Barre_de_bouclier(pygame.sprite.Sprite):
+
+    def __init__(self,joueur):
+
+        super().__init__()
+
+        self.joueur = joueur
+        self.image = pygame.Surface([self.joueur.bouclier*40,30])
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.x = 25
+        self.rect.y = 57
+
+    def update(self):
+        
+        self.image = pygame.Surface([self.joueur.bouclier*40,30])
+        self.image.fill(WHITE)
+
+class Barre_de_boule_de_feu(pygame.sprite.Sprite):
+
+    def __init__(self,joueur):
+
+        super().__init__()
+
+        self.joueur = joueur
+        self.image = pygame.Surface([self.joueur.boule_de_feu*40,30])
+        self.image.fill(BLUE)
+        self.rect = self.image.get_rect()
+        self.rect.x = 25
+        self.rect.y = 550
+
+    def update(self):
+        
+        self.image = pygame.Surface([self.joueur.bouclier*40,30])
+        self.image.fill(BLUE)
