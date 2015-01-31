@@ -67,6 +67,7 @@ class Joueur(pygame.sprite.Sprite):
         enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
         for ninja in enemy_hit_list:
             self.change_x = 0
+            self.base = False
                     
         shuriken_hit_list = pygame.sprite.spritecollide(self, self.niveau.shuriken_list, False)
         for shuriken in shuriken_hit_list:
@@ -106,13 +107,14 @@ class Joueur(pygame.sprite.Sprite):
     def saut(self):
 
         # test de plateforme si on peut sauter
-        self.rect.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
-        self.rect.y -= 2
+        if self.base == True:
+            self.rect.y += 2
+            platform_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
+            self.rect.y -= 2
 
-        # saut si on peut
-        if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
-            self.change_y = self.sautage
+            # saut si on peut
+            if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
+                self.change_y = self.sautage
 
     def normal(self):
 	#mouvement vers la droite tout le temps

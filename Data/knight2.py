@@ -22,15 +22,14 @@ ECRAN_HAUTEUR = 600
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 
+
 def main():
     
     #boucle jusqu'a ce que done = true
-    pygame.init()
+
 
     #l'écran s'affiche
-    
-    size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
-    screen = pygame.display.set_mode(size)
+    pygame.init()   
     pygame.display.set_caption("Knight VS Ninja 2")
     
         #Menu
