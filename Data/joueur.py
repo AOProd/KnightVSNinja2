@@ -6,6 +6,7 @@ from plateforme import *
 from menu import *
 from ninja import *
 from shuriken import *
+from entredeux import *
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 BLUE     = (   0,   0, 255)
@@ -104,6 +105,9 @@ class Joueur(pygame.sprite.Sprite):
             
         if self.vie <= 0:
             self.vie = 5
+
+        if self.boule_de_feu < 0:
+            self.boule_de_feu = 0
            
     def gravite(self):
         if self.change_y == 0:

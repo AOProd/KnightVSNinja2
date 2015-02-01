@@ -25,7 +25,7 @@ class boule_de_feu(pygame.sprite.Sprite):
         self.actif = False
         self.joueur = joueur
         
-        if self.joueur.boule_de_feu > 0:
+        if self.joueur.boule_de_feu >= 1:
             self.image = pygame.image.load("art/0.png").convert()
             self.rect = self.image.get_rect()
             self.rect.y = -200

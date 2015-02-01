@@ -33,8 +33,8 @@ def main():
     pygame.display.set_caption("Knight VS Ninja 2")
     
         #Menu
-    menu()
-    done = menu.done
+    #menu()
+    #done = menu.done
     
     joueur = Joueur("art/knight.png")
     joueurAnim = JoueurSprite(joueur)

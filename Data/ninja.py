@@ -33,6 +33,7 @@ class Ninja(pygame.sprite.Sprite,object):
 
         super().__init__()
 
+        self.joueur = joueur
         self.image = pygame.image.load("art/ninja_base.000.png")
         self.rect = self.image.get_rect()
         self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
@@ -64,6 +65,7 @@ class Ninja(pygame.sprite.Sprite,object):
             self.kill()
 
         if self.vie <= 0:
+            self.joueur.boule_de_feu += 0.25
             self.kill()
         if self.actif == True:
             #corps a corps
