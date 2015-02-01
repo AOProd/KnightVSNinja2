@@ -59,7 +59,7 @@ def menu():
 	
 	clic = False
 	
-	pygame.mixer.music.load('art/musicmenu.ogg')
+	pygame.mixer.music.load('art/internationale.mp3')
 	pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
 	pygame.mixer.music.play()
 	

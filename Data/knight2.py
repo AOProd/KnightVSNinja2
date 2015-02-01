@@ -7,7 +7,7 @@ from menu import *
 from ninja import *
 from shuriken import *
 from hud import *
-
+from entredeux import *
 # définit les couleurs
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
@@ -33,8 +33,8 @@ def main():
     pygame.display.set_caption("Knight VS Ninja 2")
     
         #Menu
-    #menu()
-    #done = menu.done
+    menu()
+    done = menu.done
     
     joueur = Joueur("art/knight.png")
     joueurAnim = JoueurSprite(joueur)
@@ -120,6 +120,7 @@ def main():
                 current_niveau = niveau_list[current_niveau_no]
                 joueur.niveau = current_niveau
             else:
+                achatmenu()
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau
