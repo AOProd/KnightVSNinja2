@@ -120,7 +120,7 @@ def main():
                 current_niveau = niveau_list[current_niveau_no]
                 joueur.niveau = current_niveau
             else:
-                achatmenu()
+                achatmenu(joueur)
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau

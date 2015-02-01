@@ -72,7 +72,7 @@ class Niveau_01(Niveau):
 
         Niveau.__init__(self, joueur)
 
-        self.niveau_limit = -3000
+        self.niveau_limit = -1000
 
         #mesures des platformes
         plateformes_niveau = [[210, 20, 100, 300],
