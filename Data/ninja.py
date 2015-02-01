@@ -45,6 +45,7 @@ class Ninja(pygame.sprite.Sprite,object):
         self.spriteCount2 = 0
         self.vie = 5
         
+        
     def NinjaActif(self,x):
         if x < 800:
             self.actif = True
@@ -78,7 +79,8 @@ class Ninja(pygame.sprite.Sprite,object):
                         self.image = pygame.image.load(spriteA)
                         self.spriteCount2 += 1
                         if self.spriteCount2 == 3:
-                            self.joueur.vie -= 1
+                            self.joueur.bouclier -= 1
+                            self.joueur.boucliercooldown = 0
                         if self.spriteCount2 == 4:
                             self.spriteCount2 = 0
                             self.attaque = False

@@ -46,10 +46,11 @@ class Joueur(pygame.sprite.Sprite):
         #la variable pour l'animation après
 
         self.sautage = -20
-        
         self.vie = 5
         self.bouclier = 10
         self.boule_de_feu = 10
+
+        self.boucliercooldown = 0
         
     def update(self):
         """ bouger joueur. """   
@@ -71,7 +72,8 @@ class Joueur(pygame.sprite.Sprite):
                     
         shuriken_hit_list = pygame.sprite.spritecollide(self, self.niveau.shuriken_list, False)
         for shuriken in shuriken_hit_list:
-            self.vie -= 1
+            self.bouclier -= 1
+            self.boucliercooldown = 0
             shuriken.kill()
             
         # mouvement vertical
@@ -89,7 +91,17 @@ class Joueur(pygame.sprite.Sprite):
 
             # arrête le mouvement
             self.change_y = 0
-    
+
+        if self.bouclier < 10:    
+            self.boucliercooldown +=1
+            if self.boucliercooldown > 200:
+                self.bouclier += 1
+                self.boucliercooldown = 0
+            
+        if self.bouclier < 0:
+            self.vie = self.vie + self.bouclier
+            self.bouclier = 0
+            
         if self.vie <= 0:
             self.vie = 5
            

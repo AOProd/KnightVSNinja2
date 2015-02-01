@@ -86,9 +86,10 @@ def main():
                     joueur.attaque()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:
-                    boule = boule_de_feu()
+                    boule = boule_de_feu(joueur)
                     boule.niveau = current_niveau
-                    active_sprite_list.add(boule)
+                    if boule.actif == True:
+                        active_sprite_list.add(boule)
             if event.type == pygame.constants.USEREVENT:
                     pygame.mixer.music.load('art/musicmenu.ogg')
                     pygame.mixer.music.play()
@@ -98,8 +99,8 @@ def main():
         # actualiser
         
         joueurAnim.update()            
-        active_sprite_list.update()
         current_niveau.update()
+        active_sprite_list.update()
         hud_list.update()
             
 

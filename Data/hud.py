@@ -50,7 +50,7 @@ class Barre_de_bouclier(pygame.sprite.Sprite):
         self.rect.y = 57
 
     def update(self):
-        
+
         self.image = pygame.Surface([self.joueur.bouclier*40,30])
         self.image.fill(WHITE)
 
@@ -69,5 +69,5 @@ class Barre_de_boule_de_feu(pygame.sprite.Sprite):
 
     def update(self):
         
-        self.image = pygame.Surface([self.joueur.bouclier*40,30])
+        self.image = pygame.Surface([self.joueur.boule_de_feu*40,30])
         self.image.fill(BLUE)
