@@ -31,7 +31,9 @@ def main():
     #l'écran s'affiche
     pygame.init()   
     pygame.display.set_caption("Knight VS Ninja 2")
-    
+    pygame.mouse.set_cursor(*pygame.cursors.diamond)
+    logo = pygame.image.load("art/favicon.ico")
+    pygame.display.set_icon(logo)
         #Menu
     #menu()
     #done = menu.done

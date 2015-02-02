@@ -48,12 +48,12 @@ class Joueur(pygame.sprite.Sprite):
 
         self.sautage = -20
         
-        self.attackcooldown = 90
+        self.vitesseattaque = 60
         self.attackcount = 90
         
         self.vie = 5
         
-        self.boucliermax = 10
+        self.boucliermax = 1
         self.bouclier = self.boucliermax
         self.boucliercount= 0
         self.boucliercooldown = 200
@@ -150,7 +150,7 @@ class Joueur(pygame.sprite.Sprite):
 	
     def attaque(self):
 	#coup d'épée
-        if self.attackcount > self.attackcooldown:
+        if self.attackcount > self.vitesseattaque:
             self.attack=True
             enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
             for ninja in enemy_hit_list:

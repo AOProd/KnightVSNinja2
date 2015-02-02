@@ -44,7 +44,7 @@ class Ninja(pygame.sprite.Sprite,object):
         self.joueur = joueur
         self.spriteCount = 0
         self.spriteCount2 = 0
-        self.vie = 5
+        self.vie = 3
         
         
     def NinjaActif(self,x):

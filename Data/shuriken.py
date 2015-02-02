@@ -29,7 +29,7 @@ class Shuriken(pygame.sprite.Sprite):
         self.image = pygame.image.load("art/shuriken.png")
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y + 40
+        self.rect.y = y + 60
         self.spriteimage = 0
 
     def update(self):
