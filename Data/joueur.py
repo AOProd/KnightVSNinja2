@@ -47,12 +47,19 @@ class Joueur(pygame.sprite.Sprite):
         #la variable pour l'animation après
 
         self.sautage = -20
-        self.vie = 5
-        self.bouclier = 10
-        self.boule_de_feu = 10
-
-        self.boucliercooldown = 0
         
+        self.attackcooldown = 90
+        self.attackcount = 90
+        
+        self.vie = 5
+        
+        self.boucliermax = 10
+        self.bouclier = self.boucliermax
+        self.boucliercount= 0
+        self.boucliercooldown = 200
+
+        self.boule_de_feu = 10
+                
     def update(self):
         """ bouger joueur. """   
         # gravité
@@ -74,7 +81,7 @@ class Joueur(pygame.sprite.Sprite):
         shuriken_hit_list = pygame.sprite.spritecollide(self, self.niveau.shuriken_list, False)
         for shuriken in shuriken_hit_list:
             self.bouclier -= 1
-            self.boucliercooldown = 0
+            self.boucliercount = 0
             shuriken.kill()
             
         # mouvement vertical
@@ -93,11 +100,11 @@ class Joueur(pygame.sprite.Sprite):
             # arrête le mouvement
             self.change_y = 0
 
-        if self.bouclier < 10:    
-            self.boucliercooldown +=1
-            if self.boucliercooldown > 200:
+        if self.bouclier < self.boucliermax:    
+            self.boucliercount +=1
+            if self.boucliercount > self.boucliercooldown:
                 self.bouclier += 1
-                self.boucliercooldown = 0
+                self.boucliercount = 0
             
         if self.bouclier < 0:
             self.vie = self.vie + self.bouclier
@@ -108,6 +115,8 @@ class Joueur(pygame.sprite.Sprite):
 
         if self.boule_de_feu < 0:
             self.boule_de_feu = 0
+        
+        self.attackcount+=1
            
     def gravite(self):
         if self.change_y == 0:
@@ -139,10 +148,12 @@ class Joueur(pygame.sprite.Sprite):
 	
     def attaque(self):
 	#coup d'épée
-        self.attack=True
-        enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
-        for ninja in enemy_hit_list:
-            ninja.vie -= 1
+        if self.attackcount > self.attackcooldown:
+            self.attack=True
+            enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
+            for ninja in enemy_hit_list:
+                ninja.vie -= 1
+            self.attackcount = 0
 		
 class JoueurSprite():
     change_x = 3

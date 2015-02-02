@@ -82,7 +82,7 @@ class Ninja(pygame.sprite.Sprite,object):
                         self.spriteCount2 += 1
                         if self.spriteCount2 == 3:
                             self.joueur.bouclier -= 1
-                            self.joueur.boucliercooldown = 0
+                            self.joueur.boucliercount = 0
                         if self.spriteCount2 == 4:
                             self.spriteCount2 = 0
                             self.attaque = False
