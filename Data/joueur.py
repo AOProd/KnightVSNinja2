@@ -59,6 +59,8 @@ class Joueur(pygame.sprite.Sprite):
         self.boucliercooldown = 200
 
         self.boule_de_feu = 10
+
+        self.bourse = 0
                 
     def update(self):
         """ bouger joueur. """   

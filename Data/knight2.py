@@ -60,8 +60,14 @@ def main():
     barre_de_vie = Barre_de_vie(joueur)
     barre_de_bouclier = Barre_de_bouclier(joueur)
     barre_de_boule_de_feu = Barre_de_boule_de_feu(joueur)
-    hud_list.add(barre_de_vie,barre_de_bouclier,barre_de_boule_de_feu)
-
+    coeur = Coeur()
+    bouclier = Bouclier()
+    feu = Feu()
+    argent = Argent(joueur)
+    bourse = Bourse()
+    hud_list.add(barre_de_vie,barre_de_bouclier,barre_de_boule_de_feu,coeur
+    ,bouclier,feu,argent,bourse)
+    
     active_sprite_list.add(joueur)
 
 

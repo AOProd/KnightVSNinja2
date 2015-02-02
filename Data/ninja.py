@@ -54,6 +54,7 @@ class Ninja(pygame.sprite.Sprite,object):
     def tuer(self):
         #faut faire lanim de la mor ici ^^
         self.kill()
+        self.joueur.bourse += 10
 
     def Attaque(self):
         self.attaque = True
