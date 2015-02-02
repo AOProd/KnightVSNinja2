@@ -16,11 +16,11 @@ ECRAN_HAUTEUR = 600
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 
-cases=[[100,200,100,200,False,pygame.image.load("art/carouj.png"),pygame.image.load("art/caroz.png"),""],#saut
-       [600,700,100,200,False,pygame.image.load("art/carouj.png"),pygame.image.load("art/caroz.png"),""],#vitesse d'attaque
-       [100,200,400,500,False,pygame.image.load("art/carouj.png"),pygame.image.load("art/caroz.png"),""],#bouclier max
-       [600,700,400,500,False,pygame.image.load("art/carouj.png"),pygame.image.load("art/caroz.png"),""],#regen bouclier
-       [350,450,250,350,False,pygame.image.load("art/carouj.png"),pygame.image.load("art/caroz.png"),""],#next
+cases=[[100,200,100,200,False,pygame.image.load("art/saut.png"),pygame.image.load("art/sauth.png"),""],#saut
+       [600,700,100,200,False,pygame.image.load("art/epee.png"),pygame.image.load("art/epeeh.png"),""],#vitesse d'attaque
+       [100,200,400,500,False,pygame.image.load("art/bouclier.png"),pygame.image.load("art/bouclierh.png"),""],#bouclier max
+       [600,700,400,500,False,pygame.image.load("art/rbouclier.png"),pygame.image.load("art/rbouclierh.png"),""],#regen bouclier
+       [350,450,250,350,False,pygame.image.load("art/nsuivant.png"),pygame.image.load("art/nsuivanth.png"),""],#next
        ]
 done = False
 
