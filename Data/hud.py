@@ -103,7 +103,7 @@ class Feu(pygame.sprite.Sprite):
 
         super().__init__()
 
-        self.image = pygame.image.load("art\ssss.png").convert()
+        self.image = pygame.image.load("art/bouleico.png").convert()
         self.image.set_colorkey(WHITE)
         self.rect = self.image.get_rect()
         self.rect.x = 5
@@ -133,7 +133,7 @@ class Bourse(pygame.sprite.Sprite):
 
         super().__init__()
 
-        self.image = pygame.image.load("art\sbourse.png").convert()
+        self.image = pygame.image.load("art/bourse.png").convert()
         self.image.set_colorkey(WHITE)
         self.rect = self.image.get_rect()
         self.rect.x = 690

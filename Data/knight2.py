@@ -21,7 +21,7 @@ ECRAN_HAUTEUR = 600
 
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
-
+done = False
 
 def main():
     
@@ -36,7 +36,6 @@ def main():
     pygame.display.set_icon(logo)
         #Menu
     #menu()
-    #done = menu.done
     
     joueur = Joueur("art/knight.png")
     joueurAnim = JoueurSprite(joueur)
@@ -72,13 +71,10 @@ def main():
     
     active_sprite_list.add(joueur)
 
-
-    
-
-    done = False
-
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
+    
+    global done
     
 #la grande boucle
     while not done:
@@ -89,6 +85,10 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     joueur.saut()
+                    
+                if event.key == pygame.K_x: #CHEAT BOUTON !!!!
+                    joueur.bourse+=100
+                    
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     joueur.attaque()
@@ -128,7 +128,7 @@ def main():
                 current_niveau = niveau_list[current_niveau_no]
                 joueur.niveau = current_niveau
             else:
-                achatmenu(joueur)
+                done = achatmenu(joueur)
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau

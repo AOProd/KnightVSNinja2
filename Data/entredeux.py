@@ -1,4 +1,5 @@
 import pygame
+import math
 from joueur import *
 from boule import *
 from niveau import *
@@ -23,36 +24,80 @@ cases=[[100,200,100,200,False,pygame.image.load("art/saut.png"),pygame.image.loa
        [350,450,250,350,False,pygame.image.load("art/nsuivant.png"),pygame.image.load("art/nsuivanth.png"),""],#next
        ]
 done = False
-
-def clic(pos,joueur):
+def clic(joueur,z):
+    
+    monnaie = True
     font = pygame.font.Font(None, 36)
     global done
-    if cases[0][4] and joueur.sautage > -25:
-        joueur.sautage-=1
-    if cases[1][4] and joueur.vitesseattaque > 10:
-        joueur.vitesseattaque-=10  
-    if cases[2][4] and joueur.boucliermax < 6:
-        joueur.boucliermax+=1
-        joueur.bouclier=joueur.boucliermax
-        print("mou")
-    if cases[3][4] and joueur.boucliercooldown > 100:
-        joueur.boucliercooldown-=20          
-    if cases[4][4]:
-        done = True
+    global boursen
+    
+    if cases[0][4] and joueur.sautup<5:
+        if joueur.bourse-prix(joueur.sautup)>=0:
+            joueur.sautage-=1
+            joueur.bourse-=prix(joueur.sautup) 
+            joueur.sautup+=1
+        else:
+            monnaie=False
+    if cases[1][4] and joueur.asup<5:
+        if joueur.bourse-prix(joueur.asup)>=0:
+            joueur.vitesseattaque-=10
+            joueur.bourse-=prix(joueur.asup)
+            joueur.asup+=1
+        else:
+            monnaie=False
+    if cases[2][4] and joueur.shieldup<5:
+        if joueur.bourse-prix(joueur.shieldup)>=0:       
+            joueur.boucliermax+=1
+            joueur.bouclier=joueur.boucliermax
+            joueur.bourse-=prix(joueur.shieldup)          
+            joueur.shieldup+=1   
+        else:
+            monnaie=False
+    if cases[3][4] and joueur.regup<5:
+        if joueur.bourse-prix(joueur.regup)>=0:
+            joueur.boucliercooldown-=20   
+            joueur.bourse-=prix(joueur.regup)  
+            joueur.regup+=1   
+        else:
+            monnaie=False
+            
+    if cases[4][4]:   
+        done = True  
+        
+    if not monnaie:
+        boursen=font.render("%s"%(joueur.bourse), True, RED)
+def prix(produit):
+    if produit==0:
+        return 50
+    elif produit==1:
+        return 90
+    elif produit==2:
+        return 160
+    elif produit==3:
+        return 310
+    elif produit==4:
+        return 500
+    elif produit==5:
+        return "MAX"
+
+        
 def achatmenu(joueur):
     font = pygame.font.Font(None, 36)
     backpos = [0, 0]
     backimage = pygame.image.load("art/fondachat.png").convert()
+    piece = pygame.image.load("art/piece.png")
+    bourse = pygame.image.load("art/bourse.png")
     clock = pygame.time.Clock()
     global cases
     global done
+    global boursen
     done = False
-    saut="%s"%(int(-(joueur.sautage+20)/2))
-    text1 = font.render(saut, True, WHITE)
     
     while not done:
-        pos = pygame.mouse.get_pos()
     
+        pos = pygame.mouse.get_pos()
+        boursen = font.render("%s"%(joueur.bourse), True, BLACK)
+        
         for i in range(len(cases)):
             cases[i][4]=False
             cases[i][7]=cases[i][5]
@@ -62,30 +107,44 @@ def achatmenu(joueur):
                 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
-                pygame.quit()
+                done=True
+                return True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    clic(pos,joueur)
+                    clic(joueur,boursen)
                     
-        saut="%s"%(int(-(joueur.sautage+20)))
-        sauterie = font.render(saut, True, WHITE)
-        atspeed="%s"%(int(-(joueur.vitesseattaque-60)/10))
-        vitesse= font.render(atspeed, True, BLACK)
-        boucl="%s"%(int(joueur.boucliermax-1))
-        bouclier= font.render(boucl, True, BLACK)
-        bregen="%s"%(int((-joueur.boucliercooldown+200)/20))
-        regen = font.render(bregen, True, BLACK)
+        saut = font.render("%s"%(int(joueur.sautup)), True, BLACK)
+        vitesse= font.render("%s"%(int(joueur.asup)), True, BLACK)
+        bouclier= font.render("%s"%(int(joueur.shieldup)), True, BLACK)
+        regen = font.render("%s"%(int(joueur.regup)), True, BLACK)        
+        
+        sautp = font.render("%s"%(prix(joueur.sautup)), True, BLACK)
+        vitessep= font.render("%s"%(prix(joueur.asup)), True, BLACK)
+        bouclierp= font.render("%s"%(prix(joueur.shieldup)), True, BLACK)
+        regenp = font.render("%s"%(prix(joueur.regup)), True, BLACK)
         
         screen.blit(backimage, backpos)
         
         for i in range(len(cases)):
             screen.blit(cases[i][7], [cases[i][0],cases[i][2]])
-            
-        screen.blit(font.render("Niveau suivant", True, BLACK),[310,350])     
-        screen.blit(sauterie,[145,75])
+                
+        screen.blit(saut,[145,75])
         screen.blit(vitesse,[645,75])
         screen.blit(bouclier,[145,375])
-        screen.blit(regen,[645,375])
+        screen.blit(regen,[645,375])  
+        
+        screen.blit(sautp,[135,210])
+        screen.blit(vitessep,[635,210])
+        screen.blit(bouclierp,[135,510])
+        screen.blit(regenp,[635,510])
+        
+        screen.blit(piece,[105,210])
+        screen.blit(piece,[105,510])
+        screen.blit(piece,[605,210])
+        screen.blit(piece,[605,510])
+        
+        screen.blit(bourse,[350,10])
+        screen.blit(boursen,[390,17])
         
         clock.tick(60)        
         pygame.display.flip()

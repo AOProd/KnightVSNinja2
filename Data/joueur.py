@@ -57,6 +57,11 @@ class Joueur(pygame.sprite.Sprite):
         self.bouclier = self.boucliermax
         self.boucliercount= 0
         self.boucliercooldown = 200
+        
+        self.sautup = 0
+        self.asup = 0
+        self.shieldup = 0
+        self.regup = 0
 
         self.boule_de_feu = 10
 
