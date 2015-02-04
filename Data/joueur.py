@@ -63,7 +63,7 @@ class Joueur(pygame.sprite.Sprite):
         self.shieldup = 0
         self.regup = 0
 
-        self.boule_de_feu = 10
+        self.boule_de_feu = 0
 
         self.bourse = 0
         
