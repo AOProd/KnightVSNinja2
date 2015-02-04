@@ -37,6 +37,9 @@ class Ninja(pygame.sprite.Sprite,object):
         self.image = pygame.image.load("art/ninja_base.000.png")
         self.rect = self.image.get_rect()
         self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
+        self.rectal = pygame.Rect(0,0,150,85)
+        self.rectal.right = self.rect.right
+        self.rectal.top = self.rect.top
         self.rebours = 0
         self.shuriken_active = False
         self.actif = False
@@ -61,6 +64,10 @@ class Ninja(pygame.sprite.Sprite,object):
 
     def update(self):
         self.NinjaActif(self.rect.x)
+        
+        self.rectal.right = self.rect.right
+        self.rectal.top = self.rect.top  
+        
         if self.rect.x < 0:
             self.actif = False
             self.kill()
@@ -71,8 +78,10 @@ class Ninja(pygame.sprite.Sprite,object):
             
         if self.actif == True:
             #corps a corps
-            if pygame.sprite.collide_rect(self.joueur,self): 
-                self.rect.left = self.joueur.rect.right-30
+            if self.rectal.colliderect(self.joueur.rect):
+                self.rect.top = self.joueur.rect.top-20
+            if self.rect.colliderect(self.joueur.rect):
+                self.rect.left = self.joueur.rect.right-20
                 if self.rebours == 100:
                     self.Attaque()
                 else :

@@ -142,14 +142,13 @@ class Joueur(pygame.sprite.Sprite):
     def saut(self):
 
         # test de plateforme si on peut sauter
-        if self.base == True:
-            self.rect.y += 2
-            platform_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
-            self.rect.y -= 2
+        self.rect.y += 2
+        platform_hit_list = pygame.sprite.spritecollide(self, self.niveau.platform_list, False)
+        self.rect.y -= 2
 
-            # saut si on peut
-            if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
-                self.change_y = self.sautage
+        # saut si on peut
+        if len(platform_hit_list) > 0 or self.rect.bottom >= ECRAN_HAUTEUR - 150:
+            self.change_y = self.sautage
 
     def normal(self):
 	#mouvement vers la droite tout le temps
