@@ -67,7 +67,8 @@ class Ninja(pygame.sprite.Sprite,object):
 
         if self.vie <= 0:
             self.joueur.boule_de_feu += 0.25
-            self.kill()
+            self.tuer()
+            
         if self.actif == True:
             #corps a corps
             if pygame.sprite.collide_rect(self.joueur,self): 
