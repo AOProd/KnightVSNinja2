@@ -88,6 +88,9 @@ def main():
                     
                 if event.key == pygame.K_x: #CHEAT BOUTON !!!!
                     joueur.bourse+=100
+
+                if event.key == pygame.K_u: #CHEAT BOUTON !!!!
+                    joueur.boule_de_feu+=100
                     
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:

@@ -29,6 +29,7 @@ class boule_de_feu(pygame.sprite.Sprite):
             self.image = pygame.image.load("art/0.png").convert()
             self.rect = self.image.get_rect()
             self.rect.y = -200
+            self.rect0 = self.rect
             self.niveau = None
             self.spriteCount = 0
             self.impact = 0
@@ -48,11 +49,12 @@ class boule_de_feu(pygame.sprite.Sprite):
             if self.rect.y > 350 and self.impact == 0:
                 self.impact = 1
                 self.image = pygame.image.load("art/impact.png").convert()
-                self.rect.x = self.rect.x - 80
-                self.rect.y = self.rect.y - 40
-                self.enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
-                for ninja in self.enemy_hit_list:
-                    ninja.tuer()
+                self.rect = self.image.get_rect()
+                self.rect.x = self.rect0.x - 80
+                self.rect.y = self.rect0.y - 40
+                for ninja in self.niveau.enemy_list:
+                    if pygame.sprite.collide_rect(self,ninja) == True:
+                        ninja.tuer()
 
 
             if self.impact == 1:
