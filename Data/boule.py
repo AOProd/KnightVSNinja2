@@ -14,68 +14,72 @@ size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 
 ###################################################
-
 class boule_de_feu(pygame.sprite.Sprite):
 
     def __init__(self,joueur):
 
         super().__init__()
+        self.boum = pygame.mixer.Sound("art/explosion.wav")
+        self.pouet = pygame.mixer.Sound("art/pouet.wav")
 
-        self.son = pygame.mixer.Sound("art/1572.wav")
         self.actif = False
         self.joueur = joueur
         
         if self.joueur.boule_de_feu >= 1:
-            self.image = pygame.image.load("art/0.png").convert()
+            self.image = pygame.image.load("art/boule1.png")
             self.rect = self.image.get_rect()
             self.rect.y = -200
-            self.rect0 = self.rect
             self.niveau = None
             self.spriteCount = 0
-            self.impact = 0
-            self.pause = 0
+            self.impact = False
             self.pos = pygame.mouse.get_pos()
             self.joueur.boule_de_feu -= 1
             self.actif = True
+            self.son = False
             
         else:
-            self.son.play()
+            self.pouet.play()
 
         
     def update(self):
-
         if self.actif == True :
-            #detection collision sol
-            if self.rect.y > 350 and self.impact == 0:
-                self.impact = 1
-                self.image = pygame.image.load("art/impact.png").convert()
-                self.rect = self.image.get_rect()
-                self.rect.x = self.rect0.x - 80
-                self.rect.y = self.rect0.y - 40
+
+            if self.rect.y > 220 and not self.son:
+                self.boum.play()
+                self.son = True
+            #detection collision sol                
+            if self.rect.y > 370 and not self.impact:
+
+                self.spriteCounti = 0
+                self.impact = True
+                self.image = pygame.image.load("art/explosion1.png").convert()
+                self.rect = pygame.Rect(self.pos[0]-125,320,190,230)
+
                 for ninja in self.niveau.enemy_list:
                     if pygame.sprite.collide_rect(self,ninja) == True:
                         ninja.tuer()
 
 
-            if self.impact == 1:
-                self.image.set_alpha(255-self.pause*2.55)
-                self.image.set_colorkey(BLACK)
-                self.pause += 1            
-                if self.pause == 100:
+            if self.impact:
+                
+                spriteN = "art/explosion%s.png"%(int(self.spriteCounti/4+1))
+                self.image = pygame.image.load(spriteN)
+                self.spriteCounti += 1                                
+                if self.spriteCounti == 24:
                     self.kill()
 
                             
             else:
                 # deplacement position/boule
-                self.rect.y = self.rect.y + 25
+                self.rect.y = self.rect.y + 15
                 self.rect.x = self.pos[0]-50
                 
                 #animation
-                if (pygame.time.get_ticks())%8 == 0:
-                    spriteN = "art/%s.png"%(int(self.spriteCount))
+                if (pygame.time.get_ticks())%4 == 0:
+                    spriteN = "art/boule%s.png"%(int(self.spriteCount+1))
                     self.image = pygame.image.load(spriteN)
                     self.spriteCount += 1
-                    if self.spriteCount == 5:
+                    if self.spriteCount == 6:
                         self.spriteCount =0
 
 

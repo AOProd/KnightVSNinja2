@@ -116,9 +116,10 @@ def main():
             
 
         # scrolling
-        if joueur.rect.right >= 100:
-            diff = joueur.rect.right - 100
-            joueur.rect.right = 100
+        scrolette = 100
+        if joueur.rect.right >= scrolette:
+            diff = joueur.rect.right - scrolette
+            joueur.rect.right = scrolette
             current_niveau.shift_monde(-diff)
             
         # changement de niveau et tout

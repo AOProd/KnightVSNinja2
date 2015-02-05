@@ -71,7 +71,7 @@ def menu():
                 if event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN:
                     clic = True
             elif event.type == pygame.constants.USEREVENT:
-                pygame.mixer.music.load('art/musicmenu.ogg')
+                pygame.mixer.music.load("art/internationale.mp3")
                 pygame.mixer.music.play()
     menu.done = done
 	
