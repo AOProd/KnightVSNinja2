@@ -44,7 +44,7 @@ class boule_de_feu(pygame.sprite.Sprite):
     def update(self):
         if self.actif == True :
 
-            if self.rect.y > 220 and not self.son:
+            if self.rect.y > 220 and self.joueur.sounds and not self.son:
                 self.boum.play()
                 self.son = True
             #detection collision sol                

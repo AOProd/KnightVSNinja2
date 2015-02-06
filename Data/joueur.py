@@ -33,7 +33,41 @@ class Joueur(pygame.sprite.Sprite):
     def __init__(self, filename):
 
         super().__init__() 
-
+        
+        self.stats = [[0,-20],#saut
+        [0,60],#attaque
+        [0,1],#bouclier
+        [0,200]]#regen
+        try:
+            self.sauvegarde = open("sauvegardes/save.txt", "r")
+            for i in range(len(self.stats)):
+                for u in range(len(self.stats[0])):
+                    self.stats[i][u] = int(self.sauvegarde.readline())
+            self.sauvegarde.close()
+        except IOError:
+            # Error reading file, no high score
+            try:
+                # Write the file to disk
+                self.sauvegarde = open("sauvegardes/save.txt", "w")
+                for i in range(len(self.stats)):
+                    for u in range(len(self.stats[0])):
+                        self.sauvegarde.write(str("%s\n"%(int(self.stats[i][u]))))
+                self.sauvegarde.close()
+            except IOError:
+                print("cancer")
+        except ValueError:
+            # There's a file there, but we don't understand the number.
+            print("Sauvegarde corrompue o_O")
+            try:
+                self.sauvegarde = open("sauvegardes/save.txt", "w")
+                for i in range(len(self.stats)):
+                    for u in range(len(self.stats[0])):
+                        self.sauvegarde.write(str("%s\n"%(int(self.stats[i][u]))))
+                self.sauvegarde.close()
+            except IOError:
+                print("cancer")
+        
+        
         # sprite
         self.image = pygame.image.load(filename)
 
@@ -45,22 +79,23 @@ class Joueur(pygame.sprite.Sprite):
 
         #la variable pour l'animation après
 
-        self.sautage = -20
+        self.sautage = self.stats[0][1]
         
-        self.vitesseattaque = 60
-        self.attackcount = 90
+        self.vitesseattaque = self.stats[1][1]
+        
+        self.attackcount = 0
         
         self.vie = 5
         
-        self.boucliermax = 1
+        self.boucliermax = self.stats[2][1]
         self.bouclier = self.boucliermax
         self.boucliercount= 0
-        self.boucliercooldown = 200
+        self.boucliercooldown = self.stats[3][1]
         
-        self.sautup = 0
-        self.asup = 0
-        self.shieldup = 0
-        self.regup = 0
+        self.sautup = self.stats[0][0]
+        self.asup = self.stats[1][0]
+        self.shieldup = self.stats[2][0]
+        self.regup = self.stats[3][0]
 
         self.boule_de_feu = 0
 
@@ -73,7 +108,9 @@ class Joueur(pygame.sprite.Sprite):
         
                 
     def update(self):
-        """ bouger joueur. """   
+    
+        self.upstats()
+  
         # gravité
         self.gravite()
         self.combat = False
@@ -167,6 +204,12 @@ class Joueur(pygame.sprite.Sprite):
             for ninja in enemy_hit_list:
                 ninja.vie -= 1
             self.attackcount = 0
+    
+    def upstats(self):
+        self.stats = [[self.sautup,self.sautage],#saut
+        [self.asup,self.vitesseattaque],#attaque
+        [self.shieldup,self.boucliermax],#bouclier
+        [self.regup,self.boucliercooldown]]#regen
 		
 class JoueurSprite():
     change_x = 3

@@ -66,6 +66,9 @@ def clic(joueur,z):
         
     if not monnaie:
         boursen=font.render("%s"%(joueur.bourse), True, RED)
+    
+    joueur.upstats()
+
 def prix(produit):
     if produit==0:
         return 50
@@ -148,7 +151,16 @@ def achatmenu(joueur):
         
         clock.tick(60)        
         pygame.display.flip()
-        
+    print(joueur.stats)
+    try:
+        print("mou")
+        sauvegarde = open("sauvegardes/save.txt", "w")
+        for i in range(len(joueur.stats)):
+            for u in range(len(joueur.stats[0])):
+                sauvegarde.write(str("%s\n"%(int(joueur.stats[i][u]))))
+        sauvegarde.close()
+    except IOError:
+        print("cancer")
 
 
        
