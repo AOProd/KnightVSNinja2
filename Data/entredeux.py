@@ -151,16 +151,14 @@ def achatmenu(joueur):
         
         clock.tick(60)        
         pygame.display.flip()
-    print(joueur.stats)
     try:
-        print("mou")
         sauvegarde = open("sauvegardes/save.txt", "w")
         for i in range(len(joueur.stats)):
             for u in range(len(joueur.stats[0])):
                 sauvegarde.write(str("%s\n"%(int(joueur.stats[i][u]))))
         sauvegarde.close()
     except IOError:
-        print("cancer")
+        print("o_O")
 
 
        

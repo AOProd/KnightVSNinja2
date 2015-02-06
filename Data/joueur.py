@@ -65,7 +65,7 @@ class Joueur(pygame.sprite.Sprite):
                         self.sauvegarde.write(str("%s\n"%(int(self.stats[i][u]))))
                 self.sauvegarde.close()
             except IOError:
-                print("cancer")
+                print("wtf nunu")
         
         
         # sprite
