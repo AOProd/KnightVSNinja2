@@ -40,7 +40,6 @@ class Joueur(pygame.sprite.Sprite):
         # la hitbox
         self.rect = self.image.get_rect()
         
-        
         self.attack=False
         self.base=True
 
@@ -63,11 +62,15 @@ class Joueur(pygame.sprite.Sprite):
         self.shieldup = 0
         self.regup = 0
 
-        self.boule_de_feu = 10
+        self.boule_de_feu = 0
 
         self.bourse = 0
         
         self.combat = False
+        
+        self.shwing = pygame.mixer.Sound("art/epee.wav")
+        self.sounds = True
+        
                 
     def update(self):
         """ bouger joueur. """   
@@ -158,6 +161,7 @@ class Joueur(pygame.sprite.Sprite):
     def attaque(self):
 	#coup d'épée
         if self.attackcount > self.vitesseattaque:
+            self.shwing.play()
             self.attack=True
             enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
             for ninja in enemy_hit_list:

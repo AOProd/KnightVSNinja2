@@ -1,4 +1,5 @@
 import pygame
+import random
 from joueur import *
 from boule import *
 from niveau import *
@@ -37,7 +38,7 @@ class Ninja(pygame.sprite.Sprite,object):
         self.image = pygame.image.load("art/ninja_base.000.png")
         self.rect = self.image.get_rect()
         self.rect.y = ECRAN_HAUTEUR - self.rect.height - 150
-        self.rectal = pygame.Rect(0,0,150,85)
+        self.rectal = pygame.Rect(0,0,150,85) #permet de sauter
         self.rectal.right = self.rect.right
         self.rectal.top = self.rect.top
         self.rebours = 0
@@ -48,11 +49,10 @@ class Ninja(pygame.sprite.Sprite,object):
         self.spriteCount = 0
         self.spriteCount2 = 0
         self.vie = 3
+        self.randomy = random.randint(-10,10)
+        self.randomx = random.randint(-10,10)
+        self.cling = pygame.mixer.Sound("art/katana.wav")
         
-        
-    def NinjaActif(self,x):
-        if x < 800:
-            self.actif = True
 
     def tuer(self):
         #faut faire lanim de la mor ici ^^
@@ -64,31 +64,28 @@ class Ninja(pygame.sprite.Sprite,object):
         self.attaque = True
 
     def update(self):
-        self.NinjaActif(self.rect.x)
         
         self.rectal.right = self.rect.right
         self.rectal.top = self.rect.top  
         
         if self.rect.x < 0:
-            self.actif = False
             self.kill()
 
         if self.vie <= 0:
-
             self.tuer()
             
-        if self.actif == True:
+        if self.rect.x < 800:
+        
             #corps a corps
-            if self.rectal.colliderect(self.joueur.rect):
-                self.rect.top = self.joueur.rect.top-20
+            if self.rectal.colliderect(self.joueur.rect): #suit le saut
+                self.rect.top = self.joueur.rect.top-20+self.randomy
             if self.rect.colliderect(self.joueur.rect):
-                self.rect.left = self.joueur.rect.right-20
+                self.rect.left = self.joueur.rect.right-30+self.randomx
+                
                 if self.rebours == 100:
-                    self.Attaque()
-                else :
-                    self.rebours += 1
-                if (pygame.time.get_ticks())%8 == 0: #animation attaquer (cancer)
-                    if self.attaque == True:
+                    if self.spriteCount2 == 0 and self.joueur.sounds:
+                        self.cling.play()
+                    if (pygame.time.get_ticks())%4 == 0: #animation attaquer (cancer)
                         spriteA = "art/ninjaattaque%s.png"%(int(self.spriteCount2))
                         self.image = pygame.image.load(spriteA)
                         self.spriteCount2 += 1
@@ -99,6 +96,9 @@ class Ninja(pygame.sprite.Sprite,object):
                             self.spriteCount2 = 0
                             self.attaque = False
                             self.rebours = 0
+                else :
+                    self.rebours += 1
+
     
             #a distance
             else:

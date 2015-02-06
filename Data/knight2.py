@@ -22,7 +22,6 @@ ECRAN_HAUTEUR = 600
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 done = False
-
 def main():
     
     #boucle jusqu'a ce que done = true
@@ -70,12 +69,14 @@ def main():
     ,bouclier,feu,argent,bourse)
     
     active_sprite_list.add(joueur)
-
+      
+    joueur.sounds = True
+    
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
     
     global done
-    
+
 #la grande boucle
     while not done:
 	#si cliquer sur fermer
@@ -85,7 +86,10 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     joueur.saut()
-                    
+                
+                if event.key == pygame.K_s:
+                    joueur.sounds = False
+                
                 if event.key == pygame.K_x: #CHEAT BOUTON !!!!
                     joueur.bourse+=100
 
@@ -102,7 +106,7 @@ def main():
                     if boule.actif == True:
                         active_sprite_list.add(boule)
             if event.type == pygame.constants.USEREVENT:
-                    pygame.mixer.music.load('art/musicmenu.ogg')
+                    pygame.mixer.music.load("art/internationale.mp3")
                     pygame.mixer.music.play()
             if event.type == 1:
                     joueurAnim.updateAnim()
