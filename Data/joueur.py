@@ -198,7 +198,8 @@ class Joueur(pygame.sprite.Sprite):
     def attaque(self):
 	#coup d'épée
         if self.attackcount > self.vitesseattaque:
-            self.shwing.play()
+            if self.sounds:
+                self.shwing.play()
             self.attack=True
             enemy_hit_list = pygame.sprite.spritecollide(self, self.niveau.enemy_list, False)
             for ninja in enemy_hit_list:

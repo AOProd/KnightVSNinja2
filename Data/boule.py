@@ -37,7 +37,7 @@ class boule_de_feu(pygame.sprite.Sprite):
             self.actif = True
             self.son = False
             
-        else:
+        elif joueur.sounds:
             self.pouet.play()
 
         
