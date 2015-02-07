@@ -154,7 +154,7 @@ def achatmenu(joueur):
     try:
         sauvegarde = open("sauvegardes/save.txt", "w")
         for i in range(len(joueur.stats)):
-            for u in range(len(joueur.stats[0])):
+            for u in range(len(joueur.stats[i])):
                 sauvegarde.write(str("%s\n"%(int(joueur.stats[i][u]))))
         sauvegarde.close()
     except IOError:

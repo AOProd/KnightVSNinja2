@@ -34,14 +34,21 @@ class Joueur(pygame.sprite.Sprite):
 
         super().__init__() 
         
+        self.stats0 = [[0,-20],#saut
+        [0,60],#attaque
+        [0,1],#bouclier
+        [0,200],#regen
+        [0]]#monnaie
         self.stats = [[0,-20],#saut
         [0,60],#attaque
         [0,1],#bouclier
-        [0,200]]#regen
+        [0,200],#regen
+        [0]]#monnaie
+        print(self.stats0)
         try:
             self.sauvegarde = open("sauvegardes/save.txt", "r")
             for i in range(len(self.stats)):
-                for u in range(len(self.stats[0])):
+                for u in range(len(self.stats[i])):
                     self.stats[i][u] = int(self.sauvegarde.readline())
             self.sauvegarde.close()
         except IOError:
@@ -49,10 +56,11 @@ class Joueur(pygame.sprite.Sprite):
             try:
                 # Write the file to disk
                 self.sauvegarde = open("sauvegardes/save.txt", "w")
-                for i in range(len(self.stats)):
-                    for u in range(len(self.stats[0])):
-                        self.sauvegarde.write(str("%s\n"%(int(self.stats[i][u]))))
+                for i in range(len(self.stats0)):
+                    for u in range(len(self.stats0[i])):
+                        self.sauvegarde.write(str("%s\n"%(int(self.stats0[i][u]))))
                 self.sauvegarde.close()
+                self.stats = self.stats0
             except IOError:
                 print("cancer")
         except ValueError:
@@ -60,10 +68,12 @@ class Joueur(pygame.sprite.Sprite):
             print("Sauvegarde corrompue o_O")
             try:
                 self.sauvegarde = open("sauvegardes/save.txt", "w")
-                for i in range(len(self.stats)):
-                    for u in range(len(self.stats[0])):
-                        self.sauvegarde.write(str("%s\n"%(int(self.stats[i][u]))))
+                for i in range(len(self.stats0)):
+                    for u in range(len(self.stats0[i])):
+                        self.sauvegarde.write(str("%s\n"%(int(self.stats0[i][u]))))
                 self.sauvegarde.close()
+                print(self.stats0)
+                self.stats = self.stats0
             except IOError:
                 print("wtf nunu")
         
@@ -99,7 +109,7 @@ class Joueur(pygame.sprite.Sprite):
 
         self.boule_de_feu = 0
 
-        self.bourse = 0
+        self.bourse = self.stats[4][0]
         
         self.combat = False
         
@@ -210,7 +220,8 @@ class Joueur(pygame.sprite.Sprite):
         self.stats = [[self.sautup,self.sautage],#saut
         [self.asup,self.vitesseattaque],#attaque
         [self.shieldup,self.boucliermax],#bouclier
-        [self.regup,self.boucliercooldown]]#regen
+        [self.regup,self.boucliercooldown],#regen
+        [self.bourse]]#monnaie
 		
 class JoueurSprite():
     change_x = 3
