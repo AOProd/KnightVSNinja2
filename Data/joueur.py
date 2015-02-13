@@ -34,27 +34,27 @@ class Joueur(pygame.sprite.Sprite):
 
         super().__init__() 
         
+        ##################                         SAUVEGARDE
         self.stats0 = [[0,-20],#saut
         [0,60],#attaque
         [0,1],#bouclier
         [0,200],#regen
-        [0]]#monnaie
+        [0],#monnaie
+        [1]]#son
         self.stats = [[0,-20],#saut
         [0,60],#attaque
         [0,1],#bouclier
         [0,200],#regen
-        [0]]#monnaie
-        print(self.stats0)
+        [0],#monnaie
+        [1]]#son
         try:
             self.sauvegarde = open("sauvegardes/save.txt", "r")
             for i in range(len(self.stats)):
                 for u in range(len(self.stats[i])):
                     self.stats[i][u] = int(self.sauvegarde.readline())
             self.sauvegarde.close()
-        except IOError:
-            # Error reading file, no high score
+        except IOError: #Si il existe pas
             try:
-                # Write the file to disk
                 self.sauvegarde = open("sauvegardes/save.txt", "w")
                 for i in range(len(self.stats0)):
                     for u in range(len(self.stats0[i])):
@@ -63,8 +63,7 @@ class Joueur(pygame.sprite.Sprite):
                 self.stats = self.stats0
             except IOError:
                 print("cancer")
-        except ValueError:
-            # There's a file there, but we don't understand the number.
+        except ValueError: #Si c'est pas normal
             print("Sauvegarde corrompue o_O")
             try:
                 self.sauvegarde = open("sauvegardes/save.txt", "w")
@@ -76,6 +75,11 @@ class Joueur(pygame.sprite.Sprite):
                 self.stats = self.stats0
             except IOError:
                 print("wtf nunu")
+        ######################################################################
+        
+        
+        
+        
         
         
         # sprite
@@ -114,13 +118,14 @@ class Joueur(pygame.sprite.Sprite):
         self.combat = False
         
         self.shwing = pygame.mixer.Sound("art/epee.wav")
-        self.sounds = True
+        self.sounds = self.stats[5][0]
+
         
                 
     def update(self):
-    
+
         self.upstats()
-  
+
         # gravité
         self.gravite()
         self.combat = False
@@ -221,7 +226,8 @@ class Joueur(pygame.sprite.Sprite):
         [self.asup,self.vitesseattaque],#attaque
         [self.shieldup,self.boucliermax],#bouclier
         [self.regup,self.boucliercooldown],#regen
-        [self.bourse]]#monnaie
+        [self.bourse],#monnaie
+        [self.sounds]]#son
 		
 class JoueurSprite():
     change_x = 3

@@ -34,7 +34,7 @@ def main():
     logo = pygame.image.load("art/favicon.ico")
     pygame.display.set_icon(logo)
         #Menu
-    #menu()
+    menu()
     
     joueur = Joueur("art/knight.png")
     joueurAnim = JoueurSprite(joueur)
@@ -69,8 +69,6 @@ def main():
     ,bouclier,feu,argent,bourse)
     
     active_sprite_list.add(joueur)
-      
-    joueur.sounds = True
     
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
@@ -88,8 +86,11 @@ def main():
                     joueur.saut()
                 
                 if event.key == pygame.K_s:
-                    joueur.sounds = False
-                
+                    if joueur.sounds:
+                        joueur.sounds=0
+                    else:
+                        joueur.sounds=1
+                        
                 if event.key == pygame.K_x: #CHEAT BOUTON !!!!
                     joueur.bourse+=100
 
