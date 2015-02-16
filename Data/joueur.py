@@ -3,7 +3,7 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
-from menu import *
+from intro import *
 from ninja import *
 from shuriken import *
 from entredeux import *
@@ -30,7 +30,7 @@ class Joueur(pygame.sprite.Sprite):
     # sprites ou on peut rentrer dedans
     niveau = None
     
-    def __init__(self, filename):
+    def __init__(self, filename, id):
 
         super().__init__() 
         
@@ -47,39 +47,12 @@ class Joueur(pygame.sprite.Sprite):
         [0,200],#regen
         [0],#monnaie
         [1]]#son
-        try:
-            self.sauvegarde = open("sauvegardes/save.txt", "r")
-            for i in range(len(self.stats)):
-                for u in range(len(self.stats[i])):
-                    self.stats[i][u] = int(self.sauvegarde.readline())
-            self.sauvegarde.close()
-        except IOError: #Si il existe pas
-            try:
-                self.sauvegarde = open("sauvegardes/save.txt", "w")
-                for i in range(len(self.stats0)):
-                    for u in range(len(self.stats0[i])):
-                        self.sauvegarde.write(str("%s\n"%(int(self.stats0[i][u]))))
-                self.sauvegarde.close()
-                self.stats = self.stats0
-            except IOError:
-                print("cancer")
-        except ValueError: #Si c'est pas normal
-            print("Sauvegarde corrompue o_O")
-            try:
-                self.sauvegarde = open("sauvegardes/save.txt", "w")
-                for i in range(len(self.stats0)):
-                    for u in range(len(self.stats0[i])):
-                        self.sauvegarde.write(str("%s\n"%(int(self.stats0[i][u]))))
-                self.sauvegarde.close()
-                print(self.stats0)
-                self.stats = self.stats0
-            except IOError:
-                print("wtf nunu")
+
         ######################################################################
         
         
-        
-        
+        self.id = id
+        self.readsave(self.id)
         
         
         # sprite
@@ -228,7 +201,39 @@ class Joueur(pygame.sprite.Sprite):
         [self.regup,self.boucliercooldown],#regen
         [self.bourse],#monnaie
         [self.sounds]]#son
-		
+	
+    def readsave(self, id):
+        self.fichier = "sauvegardes/save%s.txt"%(int(id))
+        try:
+            self.sauvegarde = open(self.fichier, "r")
+            for i in range(len(self.stats)):
+                for u in range(len(self.stats[i])):
+                    self.stats[i][u] = int(self.sauvegarde.readline())
+            self.sauvegarde.close()
+        except IOError: #Si il existe pas
+            try:
+                self.sauvegarde = open(self.fichier, "w")
+                for i in range(len(self.stats0)):
+                    for u in range(len(self.stats0[i])):
+                        self.sauvegarde.write(str("%s\n"%(int(self.stats0[i][u]))))
+                self.sauvegarde.close()
+                self.stats = self.stats0
+            except IOError:
+                print("cancer")
+        except ValueError: #Si c'est pas normal
+            print("Sauvegarde corrompue o_O")
+            try:
+                self.sauvegarde = open(self.fichier, "w")
+                for i in range(len(self.stats0)):
+                    for u in range(len(self.stats0[i])):
+                        self.sauvegarde.write(str("%s\n"%(int(self.stats0[i][u]))))
+                self.sauvegarde.close()
+                print(self.stats0)
+                self.stats = self.stats0
+            except IOError:
+                print("wtf nunu")
+        
+#####################################
 class JoueurSprite():
     change_x = 3
     change_y = 0

@@ -3,10 +3,11 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
-from menu import *
+from intro import *
 from ninja import *
 from shuriken import *
 from hud import *
+from sauvegarde import *
 from entredeux import *
 # définit les couleurs
 BLACK    = (   0,   0,   0)
@@ -21,7 +22,7 @@ ECRAN_HAUTEUR = 600
 
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
-done = False
+
 def main():
     
     #boucle jusqu'a ce que done = true
@@ -33,10 +34,12 @@ def main():
     pygame.mouse.set_cursor(*pygame.cursors.diamond)
     logo = pygame.image.load("art/favicon.ico")
     pygame.display.set_icon(logo)
-        #Menu
-    menu()
     
-    joueur = Joueur("art/knight.png")
+        #Intro
+    
+    saveid = intro()
+    
+    joueur = Joueur("art/knight.png", saveid)
     joueurAnim = JoueurSprite(joueur)
     
     background_position = [0, 0]
@@ -73,8 +76,7 @@ def main():
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
     
-    global done
-
+    done = False
 #la grande boucle
     while not done:
 	#si cliquer sur fermer
@@ -137,7 +139,7 @@ def main():
                 current_niveau = niveau_list[current_niveau_no]
                 joueur.niveau = current_niveau
             else:
-                done = achatmenu(joueur)
+                achatmenu(joueur)
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau

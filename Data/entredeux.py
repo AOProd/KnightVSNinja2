@@ -4,7 +4,7 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
-from menu import *
+from intro import *
 from ninja import *
 from shuriken import *
 BLACK    = (   0,   0,   0)
@@ -110,8 +110,7 @@ def achatmenu(joueur):
                 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
-                done=True
-                return True
+                pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     clic(joueur,boursen)
@@ -152,7 +151,7 @@ def achatmenu(joueur):
         clock.tick(60)        
         pygame.display.flip()
     try:
-        sauvegarde = open("sauvegardes/save.txt", "w")
+        sauvegarde = open(joueur.fichier, "w")
         for i in range(len(joueur.stats)):
             for u in range(len(joueur.stats[i])):
                 sauvegarde.write(str("%s\n"%(int(joueur.stats[i][u]))))

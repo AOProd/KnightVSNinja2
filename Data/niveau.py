@@ -3,7 +3,7 @@ from joueur import *
 from boule import *
 from niveau import *
 from plateforme import *
-from menu import *
+from intro import *
 from ninja import *
 from shuriken import *
 BLACK    = (   0,   0,   0)
