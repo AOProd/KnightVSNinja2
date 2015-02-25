@@ -92,7 +92,8 @@ class Joueur(pygame.sprite.Sprite):
         
         self.shwing = pygame.mixer.Sound("art/epee.wav")
         self.sounds = self.stats[5][0]
-
+    
+        self.mort = False
         
                 
     def update(self):
@@ -147,14 +148,15 @@ class Joueur(pygame.sprite.Sprite):
         if self.bouclier < 0:
             self.vie = self.vie + self.bouclier
             self.bouclier = 0
-            
-        if self.vie <= 0:
-            self.vie = 5
+
 
         if self.boule_de_feu < 0:
             self.boule_de_feu = 0
         
         self.attackcount+=1
+        
+        if self.vie <=0:
+            self.change_x=0
            
     def gravite(self):
         if self.change_y == 0:
@@ -249,7 +251,9 @@ class JoueurSprite():
         self.spriteAttack=1
         self.spriteCount = 0
         self.spriteJump = 0
+        self.spriteMort = 1
         self.attack = False
+        
         
     def update(self):
     
@@ -257,8 +261,16 @@ class JoueurSprite():
         self.rect.y = self.joueur.rect.y-25
      
     def updateAnim(self):
-
-        if self.joueur.attack == False :
+        if self.joueur.vie <=0 and not self.joueur.mort:   
+            spriteN = "art/explosion%s.png"%(int(self.spriteMort))        
+            self.image = pygame.image.load(spriteN)
+            self.spriteMort += 1
+            if self.spriteMort == 5:
+                self.joueur.mort = True
+            self.spriteJump = 0
+            
+            
+        elif self.joueur.attack == False :
             if self.joueur.combat:
                 self.image = pygame.image.load("art/knight_combat.png")
             else:

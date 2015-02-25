@@ -255,20 +255,3 @@ def clic(pos, phase): #bas en haut, phase : 0 = premier choix, 1 = selection sau
                 fin = True                 
         elif pos == 2:
             ph = 0   
-            
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

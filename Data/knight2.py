@@ -15,19 +15,19 @@ WHITE    = ( 255, 255, 255)
 BLUE     = (   0,   0, 255)
 RED      = ( 255,   0,   0)
 GREEN    = (   0, 255,   0)
-
+ 
 # taille de l'écran
 ECRAN_LARGEUR  = 800
 ECRAN_HAUTEUR = 600
-
+ 
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
-
+ 
 def main():
     
-    #boucle jusqu'a ce que done = true
-
-
+    #boucle jusqu'a ce que fin = true
+ 
+ 
     #l'écran s'affiche
     pygame.init()   
     pygame.display.set_caption("Knight VS Ninja 2")
@@ -35,9 +35,13 @@ def main():
     logo = pygame.image.load("art/favicon.ico")
     pygame.display.set_icon(logo)
     
-        #Intro
+    pygame.freetype.init()
+    font1 = pygame.freetype.Font("police/shanghai.ttf", 36)
+    font2 = pygame.freetype.Font("police/OldLondon.ttf", 36)    
     
-    saveid = intro()
+        #Intro
+    #saveid = intro()
+    saveid = 1
     
     joueur = Joueur("art/knight.png", saveid)
     joueurAnim = JoueurSprite(joueur)
@@ -49,16 +53,16 @@ def main():
     niveau_list.append(Niveau_01(joueur))
     current_niveau_no = 0
     current_niveau = niveau_list[current_niveau_no]
-
+ 
     active_sprite_list = pygame.sprite.Group()
     hud_list = pygame.sprite.Group()
     
     joueur.niveau = current_niveau
     joueurAnim.niveau = current_niveau
-
+ 
     joueur.rect.x = 0
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
-
+ 
     #hud
     barre_de_vie = Barre_de_vie(joueur)
     barre_de_bouclier = Barre_de_bouclier(joueur)
@@ -76,13 +80,13 @@ def main():
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
     
-    done = False
+    fin = False
 #la grande boucle
-    while not done:
+    while not fin:
 	#si cliquer sur fermer
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
-                done = True
+                fin = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     joueur.saut()
@@ -95,7 +99,7 @@ def main():
                         
                 if event.key == pygame.K_x: #CHEAT BOUTON !!!!
                     joueur.bourse+=100
-
+ 
                 if event.key == pygame.K_u: #CHEAT BOUTON !!!!
                     joueur.boule_de_feu+=100
                     
@@ -108,12 +112,15 @@ def main():
                     boule.niveau = current_niveau
                     if boule.actif == True:
                         active_sprite_list.add(boule)
-            if event.type == pygame.constants.USEREVENT:
-                    pygame.mixer.music.load("art/internationale.mp3")
-                    pygame.mixer.music.play()
-            if event.type == 1:
-                    joueurAnim.updateAnim()
             
+            if event.type == pygame.constants.USEREVENT:
+                pygame.mixer.music.load("art/internationale.mp3")
+                pygame.mixer.music.play()
+            if event.type == 1:
+                joueurAnim.updateAnim()
+        if joueur.mort :
+            fin = gameover()
+                
         # actualiser
         
         joueurAnim.update()            
@@ -121,7 +128,7 @@ def main():
         active_sprite_list.update()
         hud_list.update()
             
-
+ 
         # scrolling
         scrolette = 100
         if joueur.rect.right >= scrolette:
@@ -143,7 +150,7 @@ def main():
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau
-
+ 
         # les dessins en dessous :
         
         screen.blit(background_image, background_position)
@@ -152,16 +159,29 @@ def main():
         active_sprite_list.draw(screen)
         screen.blit(joueurAnim.image, [joueurAnim.rect.x,joueurAnim.rect.y])
         hud_list.draw(screen)
-
+ 
         #
-
-
+        
         clock.tick(60)
-
+ 
         # update de l'écran
         pygame.display.flip()
-
+    
     pygame.quit()
-
+ 
+def gameover():
+    done = False
+    screen.fill(BLACK)
+    text1 = font1.render("Les ninjas ont réussi.....", WHITE)    
+    text1pos=[400-text1[1].width/2,300]
+    screen.blit(text1[0], text1pos)
+ 
+    while not done :
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN: 
+                done = True
+                return True
+        pygame.display.flip()
+        
 if __name__ == "__main__":
     main()

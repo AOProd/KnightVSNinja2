@@ -32,14 +32,4 @@ def savecheck():
         except IOError:
             done = True
     return nombre
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
+ 
