@@ -27,7 +27,6 @@ class Joueur(pygame.sprite.Sprite):
     change_x = 3
     change_y = 0
 
-    # sprites ou on peut rentrer dedans
     niveau = None
     
     def __init__(self, filename, id):
@@ -72,10 +71,7 @@ class Joueur(pygame.sprite.Sprite):
         
         self.attackcount = 0
         
-        self.vie = 5
-        
         self.boucliermax = self.stats[2][1]
-        self.bouclier = self.boucliermax
         self.boucliercount= 0
         self.boucliercooldown = self.stats[3][1]
         
@@ -92,9 +88,8 @@ class Joueur(pygame.sprite.Sprite):
         
         self.shwing = pygame.mixer.Sound("art/epee.wav")
         self.sounds = self.stats[5][0]
-    
-        self.mort = False
-        
+
+        self.godmode = False
                 
     def update(self):
 
@@ -115,12 +110,17 @@ class Joueur(pygame.sprite.Sprite):
         for ninja in enemy_hit_list:
             self.change_x = 0
             self.base = False
-            self.combat = True                    
+            self.combat = True
+            
         shuriken_hit_list = pygame.sprite.spritecollide(self, self.niveau.shuriken_list, False)
         for shuriken in shuriken_hit_list:
             self.bouclier -= 1
             self.boucliercount = 0
             shuriken.kill()
+
+        potion_hit_list = pygame.sprite.spritecollide(self, self.niveau.objet_list, False)
+        for objet in potion_hit_list:
+            objet.mort(self)
             
         # mouvement vertical
         self.rect.y += self.change_y
@@ -149,15 +149,14 @@ class Joueur(pygame.sprite.Sprite):
             self.vie = self.vie + self.bouclier
             self.bouclier = 0
 
-
         if self.boule_de_feu < 0:
             self.boule_de_feu = 0
         
         self.attackcount+=1
         
-        if self.vie <=0:
-            self.change_x=0
-           
+        if self.godmode:
+            if self.vie <= 2:
+                self.vie = 5
     def gravite(self):
         if self.change_y == 0:
             self.change_y = 1
@@ -221,7 +220,7 @@ class Joueur(pygame.sprite.Sprite):
                 self.sauvegarde.close()
                 self.stats = self.stats0
             except IOError:
-                print("cancer")
+                print("Sauvegarde créée")
         except ValueError: #Si c'est pas normal
             print("Sauvegarde corrompue o_O")
             try:
@@ -251,9 +250,7 @@ class JoueurSprite():
         self.spriteAttack=1
         self.spriteCount = 0
         self.spriteJump = 0
-        self.spriteMort = 1
         self.attack = False
-        
         
     def update(self):
     
@@ -261,16 +258,8 @@ class JoueurSprite():
         self.rect.y = self.joueur.rect.y-25
      
     def updateAnim(self):
-        if self.joueur.vie <=0 and not self.joueur.mort:   
-            spriteN = "art/explosion%s.png"%(int(self.spriteMort))        
-            self.image = pygame.image.load(spriteN)
-            self.spriteMort += 1
-            if self.spriteMort == 5:
-                self.joueur.mort = True
-            self.spriteJump = 0
-            
-            
-        elif self.joueur.attack == False :
+
+        if self.joueur.attack == False :
             if self.joueur.combat:
                 self.image = pygame.image.load("art/knight_combat.png")
             else:

@@ -24,5 +24,15 @@ class Platform(pygame.sprite.Sprite):
 
         self.image = pygame.Surface([LARGEUR, HAUTEUR])
         self.image.fill(GREEN)
-
+        self.potion_active = False
+        self.coffre_active = False
         self.rect = self.image.get_rect()
+
+    def update(self):
+
+        if self.potion_active == True:
+            self.potion.update(self.rect.x)
+
+        if self.coffre_active == True:
+            self.coffre.update(self.rect.x)
+        

@@ -24,17 +24,20 @@ class Barre_de_vie(pygame.sprite.Sprite):
         super().__init__()
 
         self.joueur = joueur
-        if self.joueur.vie >= 0:
-            self.image = pygame.Surface([self.joueur.vie*80,30])
-            self.image.fill(RED)
-            self.rect = self.image.get_rect()
-            self.rect.x = 35
-            self.rect.y = 25
+        self.valeur_vie = self.joueur.vie
+        self.image = pygame.Surface([self.joueur.vie*80,30])
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.rect.x = 35
+        self.rect.y = 25
 
     def update(self):
-        if self.joueur.vie >= 0:
-            self.image = pygame.Surface([self.joueur.vie*80,30])
-            self.image.fill(RED)
+
+        if self.joueur.vie < 0:
+            self.joueur.vie = 0
+            
+        self.image = pygame.Surface([self.joueur.vie*80,30])
+        self.image.fill(RED)
 
 class Coeur(pygame.sprite.Sprite):
 
@@ -103,8 +106,8 @@ class Feu(pygame.sprite.Sprite):
 
         super().__init__()
 
-        self.image = pygame.image.load("art/bouleico.png").convert()
-        self.image.set_colorkey(WHITE)
+        self.image = pygame.image.load("art/bouleico.png")
+
         self.rect = self.image.get_rect()
         self.rect.x = 5
         self.rect.y = 550

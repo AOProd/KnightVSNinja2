@@ -200,7 +200,7 @@ def clic(pos, phase): #bas en haut, phase : 0 = premier choix, 1 = selection sau
             ph = 1            
         elif pos == 2:
             ph = 2
-            print("Remerciements à la Section Administrative des Locaux de l'Amicale des Riverains Agacés par la Barbarie Otakiste SALARABO")
+            print("zz")
     
     elif phase == 1:
         if pos == 0:
@@ -255,3 +255,20 @@ def clic(pos, phase): #bas en haut, phase : 0 = premier choix, 1 = selection sau
                 fin = True                 
         elif pos == 2:
             ph = 0   
+            
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
