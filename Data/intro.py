@@ -73,9 +73,6 @@ def intro():
     global cpos
     global flechepos 
 
-    
-
-
     fleche = pygame.image.load("art/flecheselec.png")
     flechepos = [200,400]
 

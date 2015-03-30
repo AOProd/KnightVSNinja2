@@ -39,13 +39,16 @@ class Joueur(pygame.sprite.Sprite):
         [0,1],#bouclier
         [0,200],#regen
         [0],#monnaie
-        [1]]#son
+        [1],#son
+        [0]]#niveau
         self.stats = [[0,-20],#saut
         [0,60],#attaque
         [0,1],#bouclier
         [0,200],#regen
         [0],#monnaie
-        [1]]#son
+        [1],#son
+        [0]]#niveau
+
 
         ######################################################################
         
@@ -79,7 +82,7 @@ class Joueur(pygame.sprite.Sprite):
         self.asup = self.stats[1][0]
         self.shieldup = self.stats[2][0]
         self.regup = self.stats[3][0]
-
+        
         self.boule_de_feu = 0
 
         self.bourse = self.stats[4][0]
@@ -88,7 +91,9 @@ class Joueur(pygame.sprite.Sprite):
         
         self.shwing = pygame.mixer.Sound("art/epee.wav")
         self.sounds = self.stats[5][0]
-
+        
+        self.niveau_no = self.stats[6][0]
+        
         self.godmode = False
                 
     def update(self):
@@ -138,7 +143,7 @@ class Joueur(pygame.sprite.Sprite):
             # arrête le mouvement
             self.change_y = 0
 
-
+        #recharge du bouclier
         if self.bouclier < self.boucliermax:    
             self.boucliercount +=1
             if self.boucliercount > self.boucliercooldown:
@@ -153,6 +158,9 @@ class Joueur(pygame.sprite.Sprite):
             self.boule_de_feu = 0
         
         self.attackcount+=1
+        
+        if self.vie > 5:
+            self.vie = 5
         
         if self.godmode:
             if self.vie <= 2:
@@ -195,15 +203,17 @@ class Joueur(pygame.sprite.Sprite):
                 ninja.vie -= 1
             self.attackcount = 0
     
-    def upstats(self):
+    def upstats(self):#actualiser les données
         self.stats = [[self.sautup,self.sautage],#saut
         [self.asup,self.vitesseattaque],#attaque
         [self.shieldup,self.boucliermax],#bouclier
         [self.regup,self.boucliercooldown],#regen
         [self.bourse],#monnaie
-        [self.sounds]]#son
+        [self.sounds],#son
+        [self.niveau_no]#niveau
+        ]
 	
-    def readsave(self, id):
+    def readsave(self, id):#lire le fichier sauvegarde
         self.fichier = "sauvegardes/save%s.txt"%(int(id))
         try:
             self.sauvegarde = open(self.fichier, "r")

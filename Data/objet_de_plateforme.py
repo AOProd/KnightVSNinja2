@@ -23,8 +23,7 @@ class Potion(pygame.sprite.Sprite):
 
         super().__init__()
 
-        self.image = pygame.image.load("art/potion.png").convert()
-        self.image.set_colorkey(WHITE)
+        self.image = pygame.image.load("art/potion.png")
         self.rect = self.image.get_rect()
         self.randpos = random.randint(self.rect.width,width)
         self.rect.y = y - self.rect.height
@@ -37,6 +36,7 @@ class Potion(pygame.sprite.Sprite):
     def mort(self,joueur):
 
         self.kill()
+        
         joueur.vie += 2
 
 class Coffre(pygame.sprite.Sprite):
@@ -68,7 +68,6 @@ class Texte(pygame.sprite.Sprite):
         super().__init__()
 
         self.font = pygame.freetype.Font("police/OldLondon.ttf", 48)
-        print(texte_liste[2])
         self.texte = self.font.render(texte_liste[2],BLACK)
         self.rect = self.texte[1]
         self.rect.x = texte_liste[0]

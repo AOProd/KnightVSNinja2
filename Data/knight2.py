@@ -23,7 +23,7 @@ ECRAN_HAUTEUR = 600
 size = [ECRAN_LARGEUR, ECRAN_HAUTEUR]
 screen = pygame.display.set_mode(size)
 
-def main():
+def main(ider):
     
     #boucle jusqu'a ce que fin = true
 
@@ -39,20 +39,21 @@ def main():
     font1 = pygame.freetype.Font("police/shanghai.ttf", 36)
     font2 = pygame.freetype.Font("police/OldLondon.ttf", 36)    
 
-        #Intro
-
-    # saveid = intro()
-    saveid = 0
-
+        #charger la partie par l'intro ou l'id
+    if ider == None:
+        saveid = intro()
+    else : 
+        saveid = ider
+    #création du joueur
     joueur = Joueur("art/knight.png", saveid)
     joueurAnim = JoueurSprite(joueur)
-
+    #création des niveaux
     niveau_list = []
     niveau_list.append(Niveau_Tutorial(joueur)) 
     niveau_list.append(Niveau_01(joueur))
     niveau_list.append(Niveau_02(joueur))
     niveau_list.append(Niveau_03(joueur))
-    current_niveau_no = 0
+    current_niveau_no = joueur.niveau_no
     current_niveau = niveau_list[current_niveau_no]
         
     background_position = [0, 0]
@@ -99,7 +100,7 @@ def main():
                 if event.key == pygame.K_UP:
                     joueur.saut()
                 if event.key == pygame.K_s:
-                    if joueur.sounds:
+                    if joueur.sounds: #son
                         joueur.sounds=0
                     else:
                         joueur.sounds=1
@@ -108,7 +109,7 @@ def main():
                     joueur.bourse+=100
                 if event.key == pygame.K_u: #CHEAT BOUTON !!!!
                     joueur.boule_de_feu+=100
-                if event.key == pygame.K_o:
+                if event.key == pygame.K_o: #CHEAT BOUTON !!!
                     if joueur.godmode :
                         joueur.godmode = False
                     else:
@@ -129,10 +130,11 @@ def main():
                 pygame.mixer.music.play()
             if event.type == 1:
                 joueurAnim.updateAnim()
-        if joueur.vie <= 0 :
-            fin = gameover()
+                
+        if joueur.vie <= 0 : #rip
+            gameover(joueur)
 
-        if ecrannoiralpha > 0 :
+        if ecrannoiralpha > 0 : #fondu imagé encore
             ecrannoiralpha -= 1
             ecrannoir.set_alpha(ecrannoiralpha)
                 
@@ -156,13 +158,17 @@ def main():
         current_position = joueur.rect.x + current_niveau.monde_shift
         if current_position < current_niveau.niveau_limit:
             if current_niveau_no < len(niveau_list)-1:
-                if current_niveau_no != 0:
+
+                joueur.niveau_no +=1
+                if current_niveau_no == 0:
+                    joueur.boule_de_feu = 0
+                    joueur.bourse = 0
+                else:
                      achatmenu(joueur)
-                achatmenu(joueur)
+                current_niveau_no += 1
                 joueur.rect.x = 120
                 joueur.vie = 5
                 joueur.bouclier = joueur.boucliermax
-                current_niveau_no += 1
                 current_niveau = niveau_list[current_niveau_no]
                 joueur.niveau = current_niveau
                 background_image = current_niveau.background
@@ -182,7 +188,8 @@ def main():
         active_sprite_list.draw(screen)
         screen.blit(joueurAnim.image, [joueurAnim.rect.x,joueurAnim.rect.y])
         hud_list.draw(screen)
-
+        
+        #fondu imagé encore encore
         if ecrannoiralpha > 0:
             screen.blit(ecrannoir,[0,0])
 
@@ -195,7 +202,7 @@ def main():
     
     pygame.quit()
 
-def gameover():
+def gameover(joueur): #on revient au début du niveau
     done = False
     screen.fill(BLACK)
     text1 = font1.render("Les ninjas ont réussi...", WHITE)    
@@ -206,8 +213,9 @@ def gameover():
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN: 
                 done = True
-                return True
+                main(joueur.id)
         pygame.display.flip()
+        
 
 if __name__ == "__main__":
-    main()
+    main(None)
