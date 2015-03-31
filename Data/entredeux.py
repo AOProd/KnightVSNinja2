@@ -27,7 +27,7 @@ done = False
 def clic(joueur,z):
     
     monnaie = True
-    font = pygame.font.Font(None, 36)
+    font = pygame.font.Font("police/freesansbold.ttf", 36)
     global done
     global boursen
     
@@ -85,7 +85,7 @@ def prix(produit):
 
         
 def achatmenu(joueur):
-    font = pygame.font.Font(None, 36)
+    font = pygame.font.Font("police/freesansbold.ttf", 36)
     backpos = [0, 0]
     backimage = pygame.image.load("art/fondachat.png").convert()
     piece = pygame.image.load("art/piece.png")

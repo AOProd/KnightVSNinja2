@@ -118,7 +118,7 @@ class Argent(pygame.sprite.Sprite):
 
         super().__init__()
 
-        self.font = pygame.font.Font(None, 36)
+        self.font = pygame.font.Font("police/freesansbold.ttf", 36)
         self.joueur = joueur
         self.image = self.font.render(str(self.joueur.bourse), True, WHITE)
         self.rect = self.image.get_rect()

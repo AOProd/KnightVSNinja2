@@ -18,7 +18,7 @@ screen = pygame.display.set_mode(size)
 
 def menu():
 	done = False
-	font = pygame.font.Font(None, 36)
+	font = pygame.font.Font("police/freesansbold.ttf", 36)
 	screen.fill(BLACK)
 	AOP_position = [190, 30]
 	logoAOP = pygame.image.load("art/AOP.png").convert()
