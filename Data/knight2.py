@@ -90,6 +90,7 @@ def main(ider):
     clock = pygame.time.Clock()
     pygame.time.set_timer(1, 100)
     fin = False
+    over = False
 #la grande boucle
     while not fin:
 	#si cliquer sur fermer
@@ -131,8 +132,6 @@ def main(ider):
             if event.type == 1:
                 joueurAnim.updateAnim()
                 
-        if joueur.vie <= 0 : #rip
-            gameover(joueur)
 
         if ecrannoiralpha > 0 : #fondu imagé encore
             ecrannoiralpha -= 1
@@ -199,8 +198,13 @@ def main(ider):
 
         # update de l'écran
         pygame.display.flip()
-    
-    pygame.quit()
+        if joueur.vie <= 0 : #rip
+            fin = gameover(joueur)
+            over = True
+    if over:
+        main(joueur.id)
+    else:
+        pygame.quit()
 
 def gameover(joueur): #on revient au début du niveau
     done = False
@@ -213,7 +217,7 @@ def gameover(joueur): #on revient au début du niveau
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN: 
                 done = True
-                main(joueur.id)
+                return True
         pygame.display.flip()
         
 
