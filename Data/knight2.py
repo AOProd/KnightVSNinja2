@@ -69,9 +69,17 @@ def main(ider):
     joueur.rect.y = ECRAN_HAUTEUR - joueur.rect.height
 
     #Fondu imagé
+    
+    nomniveau = font1.render(current_niveau.nom, WHITE)
+    nomniveaupos = [400-nomniveau[1].width/2,300]
+    
     ecrannoir = pygame.Surface((ECRAN_LARGEUR,ECRAN_HAUTEUR))
     ecrannoir.fill(BLACK)
-    ecrannoiralpha = 255    
+    ecrannoir.blit(nomniveau[0],nomniveaupos)
+    ecrannoiralpha = 255
+    
+    
+    
 
     #hud
     barre_de_vie = Barre_de_vie(joueur)
@@ -171,13 +179,18 @@ def main(ider):
                 current_niveau = niveau_list[current_niveau_no]
                 joueur.niveau = current_niveau
                 background_image = current_niveau.background
-                ecrannoiralpha = 255
             else:
                 achatmenu(joueur)
                 joueur.rect.x = 100
                 current_niveau = Niveau_01(joueur)
                 joueur.niveau = current_niveau
-                ecrannoiralpha = 255
+                
+            ecrannoiralpha = 255
+            ecrannoir.fill(BLACK)
+            nomniveau = font1.render(current_niveau.nom, WHITE)
+            nomniveaupos = [400-nomniveau[1].width/2,300]
+            ecrannoir.blit(nomniveau[0],nomniveaupos)
+            
 
         # les dessins en dessous :
 

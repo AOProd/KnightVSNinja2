@@ -88,6 +88,7 @@ class Niveau_Tutorial(Niveau):
         self.background = pygame.image.load("art/imagedefond.png").convert()
         self.niveau_limit = -6000
         self.joueur.boule_de_feu = 1
+        self.nom = "Tutorial"
         
         #mesures des platformes
         plateformes_niveau = [[200, 150, 2700, 300]
@@ -130,6 +131,7 @@ class Niveau_01(Niveau):
         Niveau.__init__(self, joueur)
         self.background = pygame.image.load("art/imagedefond.png").convert()
         self.niveau_limit = -2000
+        self.nom = "Niveau 1"
 
         #mesures des platformes
         plateformes_niveau = [[100, 20, 800, 300],
@@ -172,6 +174,7 @@ class Niveau_02(Niveau):
         Niveau.__init__(self, joueur)
         self.background = pygame.image.load("art/fondmenu.png").convert()
         self.niveau_limit = -2000
+        self.nom = "Niveau 2"
 
         #mesures des platformes
         plateformes_niveau = [[110, 20, 600, 300],
@@ -215,6 +218,7 @@ class Niveau_03(Niveau):
         Niveau.__init__(self, joueur)
         self.background = pygame.image.load("art/fondmenu.png").convert()
         self.niveau_limit = -3000
+        self.nom = "Niveau 3"
 
         #mesures des platformes
         plateformes_niveau = [[190, 20, 690, 300],
